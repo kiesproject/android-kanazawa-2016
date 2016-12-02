@@ -1,6 +1,7 @@
 package com.higamasa.juniorkanazawa.repository;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.higamasa.juniorkanazawa.entity.QuizEntity;
 
@@ -19,7 +20,7 @@ public class QuizRepository {
     private Context mContext;
     private ArrayList<QuizEntity> mQuizList;
 
-    public void fetchQuizlist(Context context) {
+    public QuizRepository(Context context) {
         this.mQuizList = new ArrayList<QuizEntity>();
         this.mContext = context;
     }
@@ -44,6 +45,8 @@ public class QuizRepository {
                 quizEntity.setDrawable(Jobj.getString("drawable"));
                 quizEntity.setAnswer(Jobj.getInt("answer"));
                 mQuizList.add(quizEntity);
+                Log.d("category",String.valueOf(quizEntity.getId()));
+                Log.d("category",(quizEntity.getStatement()));
                 System.out.print(quizEntity.getId());
                 System.out.print(quizEntity.getStatement());
             }
