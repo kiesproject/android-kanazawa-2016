@@ -23,6 +23,8 @@ public class QuizEntity {
                 return id;
         }
         public String getStatement(){return statement;}
+        public String getTitle(){return title;}
+        public String getYear(){return year;}
 
         public String getDrawable() {
                 return drawable;

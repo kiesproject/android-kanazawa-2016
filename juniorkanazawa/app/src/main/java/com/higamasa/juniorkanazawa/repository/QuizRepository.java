@@ -21,7 +21,7 @@ public class QuizRepository {
     private ArrayList<QuizEntity> mQuizList;
 
     public QuizRepository(Context context) {
-        this.mQuizList = new ArrayList<QuizEntity>();
+        this.mQuizList = new ArrayList<>();
         this.mContext = context;
     }
     public void loadQuiz(){
@@ -38,25 +38,30 @@ public class QuizRepository {
                 quizEntity.setTitle(Jobj.getString("title"));
                 quizEntity.setYear(Jobj.getString("year"));
                 quizEntity.setStatement(Jobj.getString("statement"));
-                quizEntity.setFirst(Jobj.getString("first"));
-                quizEntity.setSecond(Jobj.getString("second"));
-                quizEntity.setThird(Jobj.getString("third"));
-                quizEntity.setFourth(Jobj.getString("fourth"));
-                quizEntity.setDrawable(Jobj.getString("drawable"));
-                quizEntity.setAnswer(Jobj.getInt("answer"));
+//                quizEntity.setFirst(Jobj.getString("first"));
+//                quizEntity.setSecond(Jobj.getString("second"));
+//                quizEntity.setThird(Jobj.getString("third"));
+//                quizEntity.setFourth(Jobj.getString("fourth"));
+//                quizEntity.setDrawable(Jobj.getString("drawable"));
+//                quizEntity.setAnswer(Jobj.getInt("answer"));
                 mQuizList.add(quizEntity);
-                Log.d("category",String.valueOf(quizEntity.getId()));
-                Log.d("category",(quizEntity.getStatement()));
-                System.out.print(quizEntity.getId());
-                System.out.print(quizEntity.getStatement());
+                mQuizList.get(i).getId();
+                mQuizList.get(i).getStatement();
+                mQuizList.get(i).getTitle();
+                mQuizList.get(i).getYear();
+//                Log.d("category",String.valueOf(quizEntity.getId()));
+//                Log.d("category",(quizEntity.getStatement()));
+//                Log.d("genre",String.valueOf(mQuizList.get(i).getId()));
+//                System.out.print(quizEntity.getId());
+//                System.out.print(quizEntity.getStatement());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e){
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
     }
-
+    public ArrayList<QuizEntity> getQuizList(){
+        return mQuizList;
+    }
     private String getStringFromAssets(String FileName) throws IOException {
         String file = "";
         InputStream inputstream = mContext.getAssets().open(FileName);
