@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by banjousyunsuke on 2016/11/29.
@@ -38,12 +39,54 @@ public class QuizRepository {
                 quizEntity.setTitle(Jobj.getString("title"));
                 quizEntity.setYear(Jobj.getString("year"));
                 quizEntity.setStatement(Jobj.getString("statement"));
-//                quizEntity.setFirst(Jobj.getString("first"));
-//                quizEntity.setSecond(Jobj.getString("second"));
-//                quizEntity.setThird(Jobj.getString("third"));
-//                quizEntity.setFourth(Jobj.getString("fourth"));
-//                quizEntity.setDrawable(Jobj.getString("drawable"));
-//                quizEntity.setAnswer(Jobj.getInt("answer"));
+                quizEntity.setFirst(Jobj.getString("first"));
+                quizEntity.setSecond(Jobj.getString("second"));
+                quizEntity.setThird(Jobj.getString("third"));
+                quizEntity.setFourth(Jobj.getString("fourth"));
+                quizEntity.setDrawable(Jobj.getString("drawable"));
+                quizEntity.setAnswer(Jobj.getInt("answer"));
+                mQuizList.add(quizEntity);
+                mQuizList.get(i).getId();
+                mQuizList.get(i).getTitle();
+                mQuizList.get(i).getYear();
+                mQuizList.get(i).getStatement();
+                mQuizList.get(i).getFirst();
+                mQuizList.get(i).getSecond();
+                mQuizList.get(i).getThird();
+                mQuizList.get(i).getFourth();
+                mQuizList.get(i).getDrawable();
+                mQuizList.get(i).getAnswer();
+//                Log.d("category",String.valueOf(quizEntity.getId()));
+//                Log.d("category",(quizEntity.getStatement()));
+//                Log.d("genre",String.valueOf(mQuizList.get(i).getId()));
+//                System.out.print(quizEntity.getId());
+//                System.out.print(quizEntity.getStatement());
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public void loadShuffleQuiz(){
+        try{
+//            InputStream inputStream = assetManager.open("junior1.json");
+            String jsonString = getStringFromAssets("junior1.json");
+            JSONObject json = new JSONObject(jsonString).getJSONObject("catalog");
+            JSONArray jArray = json.getJSONArray("junior");
+
+            for (int i = 0; i<jArray.length(); i++) {
+                JSONObject Jobj = jArray.getJSONObject(i);
+                QuizEntity quizEntity = new QuizEntity();
+                Random random = new Random();
+                quizEntity.setId(Jobj.getInt("id"));
+                quizEntity.setTitle(Jobj.getString("title"));
+                quizEntity.setYear(Jobj.getString("year"));
+                quizEntity.setStatement(Jobj.getString("statement"));
+                quizEntity.setFirst(Jobj.getString("first"));
+                quizEntity.setSecond(Jobj.getString("second"));
+                quizEntity.setThird(Jobj.getString("third"));
+                quizEntity.setFourth(Jobj.getString("fourth"));
+                quizEntity.setDrawable(Jobj.getString("drawable"));
+                quizEntity.setAnswer(Jobj.getInt("answer"));
                 mQuizList.add(quizEntity);
                 mQuizList.get(i).getId();
                 mQuizList.get(i).getStatement();
@@ -59,6 +102,7 @@ public class QuizRepository {
             e.printStackTrace();
         }
     }
+
     public ArrayList<QuizEntity> getQuizList(){
         return mQuizList;
     }

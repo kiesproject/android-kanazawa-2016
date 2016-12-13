@@ -11,6 +11,8 @@ import com.higamasa.juniorkanazawa.entity.QuizEntity;
 import com.higamasa.juniorkanazawa.repository.QuizRepository;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by banjousyunsuke on 2016/12/02.
@@ -37,6 +39,24 @@ public class QuizChoice extends AppCompatActivity{
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,data);
         listView.setAdapter(arrayAdapter);
 
+    }
+    public void randomList(){
+        ListView listView = (ListView)findViewById(R.id.quizList);
+        final QuizRepository repository = new QuizRepository(this);
+//        ArrayList<QuizEntity> quizList;
+//        quizList = repository.getQuizList();
+        repository.loadQuiz();
+//        Log.d("year", String.valueOf(repository));
+        ArrayList<QuizEntity> randomquizList;
+        randomquizList = repository.getQuizList();
+        Collections.shuffle(randomquizList);
+        String[] data = new String[randomquizList.size()];
+        for (int i = 0;i<randomquizList.size();i++){
+            data[i] = randomquizList.get(i).getYear();
+            Log.d("ryear",data[i]);
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,data);
+        listView.setAdapter(arrayAdapter);
     }
 }
 

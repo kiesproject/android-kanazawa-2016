@@ -22,13 +22,17 @@ public class QuizEntity {
         public int getId() {
                 return id;
         }
-        public String getStatement(){return statement;}
         public String getTitle(){return title;}
         public String getYear(){return year;}
-
+        public String getStatement(){return statement;}
+        public String getFirst(){return first;}
+        public String getSecond(){return second;}
+        public String getThird(){return third;}
+        public String getFourth(){return fourth;}
         public String getDrawable() {
                 return drawable;
         }
+        public int getAnswer(){return answer;}
 
         public void setId(int id){this.id = id;}
         public void setTitle(String title){this.title = title;}
