@@ -35,7 +35,6 @@ public class QuizActivity extends AppCompatActivity {
 				view.setEnabled(false);
 				correct++;
 
-
 			}
 		}
 	}
