@@ -39,4 +39,3 @@ public class QuizChoice extends AppCompatActivity{
 
     }
 }
-
