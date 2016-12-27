@@ -16,7 +16,7 @@ public class QuizActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_quiz);
+		setContentView(R.layout.content_quiz);
 
 		ArrayList<String> Answerlist = new ArrayList<String>();
 		((Button)findViewById(R.id.button0)).setText(Answerlist.get(0));
