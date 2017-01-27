@@ -12,13 +12,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Created by banjousyunsuke on 2016/11/29.
  */
-public class QuizRepository {
+public class QuizRepository implements Serializable {
     private Context mContext;
 //    private ArrayList<QuizEntity> mQuizList;
     private ArrayList<YearQuiz> allQuiz;

@@ -58,7 +58,11 @@ public class QuizChoice extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent , View view, int position, long l) {
                 ListView listView = (ListView) parent;
                 Intent intent = new Intent(QuizChoice.this,QuizActivity.class);
-//  yearList.get(position).quizzes;
+
+                intent.putExtra("all",yearList.get(position).getQuizzes());
+//                Bundle bundle = new Bundle();
+                startActivity(intent);
+                //  yearList.get(position).quizzes;
             }
         });
 //            @Override
