@@ -33,6 +33,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		setQuestion(nStatement);
 	}
 
+	//クイズの挿入
 	public void setQuestion(int sNumber){
 		Intent ArrayIntent = getIntent();
 		answerList = (ArrayList<QuizEntity>) ArrayIntent.getSerializableExtra("all");
@@ -83,16 +84,18 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 	//正誤判定
 	public void AnswerJudge(View view){
-		if (((Button)view).getText().equals(Answer)){	//正解の時
+		if (((Button)view).getText().equals(Answer)){
+			//正解の時
 			correct++;
 			next(view);
 		}
-		else{		//不正解の時
+		else{
+			//不正解の時
 			next(view);
 		}
 	}
 
-	//正解の文字列取得
+	//正解の番号を文字列に変換
 	public String AnswerSelect(int aNumber){
 		String AnswerText = null;
 
@@ -113,6 +116,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		return AnswerText;
 	}
 
+	//次の問題へ移行
 	public void next(View view){
 		++nStatement;
 		if(nStatement < answerList.size()){
