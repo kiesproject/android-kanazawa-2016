@@ -27,7 +27,7 @@ public class QuizChoice extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.quizchoice);
+        setContentView(R.layout.choice_quiz);
         ListView listView = (ListView)findViewById(R.id.quizList);
         final QuizRepository repository = new QuizRepository(this);
 //        ArrayList<QuizEntity> quizList;
