@@ -134,6 +134,7 @@ public class QuizRepository implements Serializable {
     public ArrayList<YearQuiz> getQuizList() {
         return allQuiz;
     }
+
     private String getStringFromAssets(String FileName) throws IOException {
         String file = "";
         InputStream inputstream = mContext.getAssets().open(FileName);

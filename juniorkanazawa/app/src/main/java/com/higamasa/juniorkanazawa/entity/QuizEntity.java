@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Created by banjousyunsuke on 2016/11/29.
  */
+
 public class QuizEntity implements Serializable {
         private int id;
         private String statement;

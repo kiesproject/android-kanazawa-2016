@@ -5,9 +5,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import android.support.annotation.IntegerRes;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+
 import java.util.ArrayList;
 
 public class QuizActivity extends Activity implements View.OnClickListener {
@@ -25,6 +33,8 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private Button SecondButton;
 	private Button ThirdButton;
 	private Button FourthButton;
+
+	private ImageView correctImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 		int AnswerNumber = answerList.get(sNumber).getAnswer();
 		Answer = AnswerSelect(AnswerNumber);
+
 		FirstButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -88,7 +99,8 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		if (((Button)view).getText().equals(Answer)){
 			//正解の時
 			correct++;
-			next(view);
+			CorrectAnimation();
+				next(view);
 		}
 		else{
 			//不正解の時
@@ -133,5 +145,13 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 	@Override
 	public void onClick(View view) {
+	}
+	public void CorrectAnimation(){
+		correctImage =(ImageView)findViewById(R.id.correct);
+		correctImage.setImageResource(R.drawable.maru);
+		AlphaAnimation alpha = new AlphaAnimation(0,1);
+		alpha.setDuration(3000);
+		alpha.setFillBefore(true);
+		correctImage.startAnimation(alpha);
 	}
 }
