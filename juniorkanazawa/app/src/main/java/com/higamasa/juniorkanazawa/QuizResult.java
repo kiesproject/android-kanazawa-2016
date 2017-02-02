@@ -29,10 +29,9 @@ public class QuizResult extends AppCompatActivity{
 		Log.d("correctN",String.valueOf(correct));
 
 		cStatement = (TextView)findViewById(R.id.correctView);
-		cStatement.setText(correct);
+		cStatement.setText(String.valueOf(correct));
 
 		rStatement = (TextView)findViewById(R.id.statementView);
-		rStatement.setText(nStatement);
+		rStatement.setText(String.valueOf(nStatement));
 	}
-
 }

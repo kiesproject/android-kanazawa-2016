@@ -1,11 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ListView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/activity_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            tools:context="com.higamasa.juniorkanazawa.QuizChoice"
+            android:background="#D4DFE6">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/quizList"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:layout_weight="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="233dp"
+                android:layout_height="92dp"
+                android:src="@drawable/kanazawa_logo"
+                android:scaleType="fitXY"/>
+            <Button
+                android:text="←戻る"
+                android:textSize="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="0.42" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <CheckBox
+                android:text="未回答のみ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox4"
+                android:layout_weight="1" />
+            <CheckBox
+                android:text="間違えた問題のみ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox3"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp">
+            <Button
+                android:text="総合問題"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sougou"
+                android:background="#f9a825"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2016年（平成28年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button6"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2015年（平成27年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button5"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2014年（平成26年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button8"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2013年（平成25年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button9"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2012年（平成24年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button10"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2011年（平成23年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button11"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2010年（平成22年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button12"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2009年（平成21年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button13"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2008年（平成20年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button14"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2007年（平成19年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button15"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+            <Button
+                android:text="2006年（平成18年度）"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button16"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
