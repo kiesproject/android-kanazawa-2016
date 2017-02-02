@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by banjousyunsuke on 2016/12/27.
  */
-public class YearQuiz {
+public class YearQuiz implements Serializable {
     public ArrayList<QuizEntity> quizzes = new ArrayList<>();
     private int year;
     private String year_str;

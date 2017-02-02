@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
+            android:id="@+id/title"
             android:text="○○○○年　第□問"
             android:layout_alignParentLeft="true"
             android:textSize="25dp" />
@@ -45,19 +46,24 @@
 
     </LinearLayout>
 
-
-
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_weight="5">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.1"
+        android:layout_weight="20"
         android:background="@drawable/grid">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:id="@+id/statement"
+            android:layout_weight="3"
             android:text="この大会は、国民に希望をあたえることと、体育を純粋なスポーツにすることを目標に計画され、第２回大会が「初の地方大会」として1947年に石川県で開催されました。この大会をなんというでしょうか。"
             android:textSize="22dp"
             />
@@ -65,21 +71,22 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="234dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="14dp"
-        android:orientation="vertical"
-        android:layout_margin="5dp">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="234dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginBottom="14dp"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_margin="5dp">-->
 
         <Button
             android:text="①　金沢交歓球技大会"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button0"
-            android:textSize="23dp"
+            android:textSize="18sp"
+            android:layout_weight="1"
             android:background="@drawable/round_button"
             android:layout_margin="3dp" />
 
@@ -88,7 +95,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button1"
-            android:textSize="23dp"
+            android:textSize="18sp"
+            android:layout_weight="1"
             android:background="@drawable/round_button"
             android:layout_margin="3dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Button" />
@@ -98,7 +106,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button2"
-            android:textSize="23dp"
+            android:textSize="18sp"
+            android:layout_weight="1"
             android:background="@drawable/round_button"
             android:layout_margin="3dp" />
 
@@ -107,9 +116,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button3"
-            android:textSize="23dp"
+            android:textSize="18sp"
+            android:layout_weight="1"
             android:background="@drawable/round_button"
             android:layout_margin="3dp" />
-    </LinearLayout>
 
+    </LinearLayout>
 </LinearLayout>
