@@ -11,15 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by banjousyunsuke on 2016/11/29.
  */
-<<<<<<< HEAD
 
-=======
->>>>>>> 613ae08f5e6c6d6ff22dd6d4e3a33ea69f5cfca9
 public class QuizRepository implements Serializable {
     private Context mContext;
     //    private ArrayList<QuizEntity> mQuizList;

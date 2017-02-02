@@ -22,18 +22,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 //				repo.loadQuiz();
 //				System.out.print("onClick");
-<<<<<<< HEAD
 				Intent intent = new Intent(MainActivity.this,QuizChoice.class);
 				startActivity(intent);
 			}
 		});
 	}
 }
-=======
-                Intent intent = new Intent(MainActivity.this, QuizChoice.class);
-                startActivity(intent);
-            }
-        });
-    }
-}
->>>>>>> 613ae08f5e6c6d6ff22dd6d4e3a33ea69f5cfca9
+

@@ -23,19 +23,16 @@ public class QuizResult extends AppCompatActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.resurt_quiz);
 
-		setResult(correct,nStatement);
-	}
-
-	public void setResult(int correct, int state){
 		Intent intent = getIntent();
 		correct = intent.getIntExtra("correct",correct);
 		nStatement = intent.getIntExtra("nStatement",nStatement);
-//		Log.d("correctN",String.valueOf(correct));
+		Log.d("correctN",String.valueOf(correct));
 
 		cStatement = (TextView)findViewById(R.id.correctView);
 		cStatement.setText(correct);
 
 		rStatement = (TextView)findViewById(R.id.statementView);
-		rStatement.setText(state);
+		rStatement.setText(nStatement);
 	}
+
 }
