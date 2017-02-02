@@ -1,6 +1,5 @@
 package com.higamasa.juniorkanazawa;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,9 +22,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 //				repo.loadQuiz();
 //				System.out.print("onClick");
-                Intent intent = new Intent(MainActivity.this, QuizChoice.class);
-                startActivity(intent);
-            }
-        });
-    }
+
+				Intent intent = new Intent(MainActivity.this,QuizChoice.class);
+				startActivity(intent);
+			}
+		});
+	}
 }

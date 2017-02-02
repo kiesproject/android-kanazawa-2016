@@ -1,10 +1,8 @@
 package com.higamasa.juniorkanazawa;
 
 import com.higamasa.juniorkanazawa.entity.QuizEntity;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-
 /**
  * Created by banjousyunsuke on 2016/12/27.
  */

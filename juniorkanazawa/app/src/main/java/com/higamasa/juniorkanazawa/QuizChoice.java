@@ -10,10 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.higamasa.juniorkanazawa.entity.QuizEntity;
 import com.higamasa.juniorkanazawa.repository.QuizRepository;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,8 +20,8 @@ import java.util.List;
 /**
  * Created by banjousyunsuke on 2016/12/02.
  */
-public class QuizChoice extends AppCompatActivity{
 
+public class QuizChoice extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +32,13 @@ public class QuizChoice extends AppCompatActivity{
 //        quizList = repository.getQuizList();
         repository.loadQuiz();
 //        Log.d("year", String.valueOf(repository));
-         final ArrayList<YearQuiz> yearList = repository.getQuizList();
+        final ArrayList<YearQuiz> yearList = repository.getQuizList();
 //        if(yearList.isEmpty()){
 //            Log.d("QuizList","isEmpty");
 //        } else {
 //            Log.d("QuizList", ""+yearList.size());
 //        }
 //        Log.d("QuizList", ""+yearList.size());
-
         String[] data = new String[yearList.size()];
 //        String[] data = (String[]) quizList.toArray(new String[0]);
 //        for (String str : data) {
@@ -69,14 +66,6 @@ public class QuizChoice extends AppCompatActivity{
 //            public void onItemClick(AdapterView<?> parent, View view,int position,long id) {
 //
 //            }
-
 //
-
-
-
-
-
     }
-
 }
-
