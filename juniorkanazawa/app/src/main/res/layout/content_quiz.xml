@@ -33,18 +33,34 @@
             android:textSize="27dp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
 
-        <LinearLayout
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+
+
+
+
+
+        <FrameLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/grid"
-            android:layout_weight="5">
+            android:layout_weight="5"
+            android:id="@+id/frame">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:id="@+id/correctImage"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:id="@+id/IncorrectImage"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,8 +68,13 @@
             android:id="@+id/statement"
             android:layout_weight="1"
             android:text="この大会は、国民に希望をあたえることと、体育を純粋なスポーツにすることを目標に計画され、第２回大会が「初の地方大会」として1947年に石川県で開催されました。この大会をなんというでしょうか。"
-            android:textSize="22dp"/>
-    </LinearLayout>
+            android:textSize="22dp"
+            />
+
+
+    </FrameLayout>
+
+
 
     <Button
         android:text="①　金沢交歓球技大会"
@@ -92,9 +113,6 @@
             android:layout_weight="1"
             android:background="@drawable/round_button"
             android:layout_margin="3dp" />
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/correct"/>
+
     </LinearLayout>
 </LinearLayout>
