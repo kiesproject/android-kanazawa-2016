@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by banjousyunsuke on 2016/11/29.
@@ -135,6 +134,7 @@ public class QuizRepository implements Serializable {
     public ArrayList<YearQuiz> getQuizList() {
         return allQuiz;
     }
+
     private String getStringFromAssets(String FileName) throws IOException {
         String file = "";
         InputStream inputstream = mContext.getAssets().open(FileName);

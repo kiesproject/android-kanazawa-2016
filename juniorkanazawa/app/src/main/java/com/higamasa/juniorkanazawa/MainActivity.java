@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final QuizRepository repo = new QuizRepository(this);
+		final QuizRepository repo = new QuizRepository(this);
 
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 //				repo.loadQuiz();
 //				System.out.print("onClick");
-
 				Intent intent = new Intent(MainActivity.this,QuizChoice.class);
 				startActivity(intent);
 			}
 		});
 	}
 }
+

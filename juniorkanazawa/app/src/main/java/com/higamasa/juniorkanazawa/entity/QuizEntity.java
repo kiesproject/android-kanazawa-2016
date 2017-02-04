@@ -6,7 +6,6 @@ import java.io.Serializable;
  * Created by banjousyunsuke on 2016/11/29.
  */
 
-
 public class QuizEntity implements Serializable {
         private int id;
         private String statement;
@@ -76,10 +75,7 @@ public class QuizEntity implements Serializable {
                 this.third = third;
         }
 
-
-        public void setFourth(String fourth) {
-                this.fourth = fourth;
-        }
+        public void setFourth(String fourth) { this.fourth = fourth;}
 
         //        public void setDrawable(String drawable){this.drawable =drawable;}
         public void setAnswer(int answer) {

@@ -15,10 +15,11 @@
         android:layout_weight="0.41"
         android:weightSum="1">
         <TextView
-            android:text="TextView10"
+            android:text="この問題の正答率"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/evaluateView"
+            android:textSize="70sp"
             android:layout_weight="1.60"/>
     </LinearLayout>
 
@@ -28,30 +29,48 @@
         android:orientation="horizontal"
         android:layout_weight="0.01"
         android:weightSum="1">
+
         <TextView
             android:layout_width="150dp"
             android:layout_height="100dp"
-            android:id="@+id/correctView"/>
+            android:id="@+id/correctView"
+            android:textSize="90sp"/>
+
         <TextView
-            android:text="/fdfdfd"
+            android:text="/"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="90sp"
             android:layout_weight="1.00"/>
 
         <TextView
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:id="@+id/statementView"
+            android:textSize="90sp"
             android:layout_weight="0.37"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0.01"
+        >
         <Button
+            android:text="小/中学校選択へ"
+            android:textSize="15sp"
             android:layout_width="100dp"
             android:layout_height="116dp"
-            android:id="@+id/backButton"/>
+            android:id="@+id/schoolButton"
+            android:layout_weight="1"/>
+
+        <Button
+            android:text="年代選択へ"
+            android:textSize="15sp"
+            android:layout_width="100dp"
+            android:layout_height="116dp"
+            android:id="@+id/ageButton"
+            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>

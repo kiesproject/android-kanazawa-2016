@@ -1,5 +1,8 @@
 package com.higamasa.juniorkanazawa;
 
+import android.view.ViewGroup;
+import android.widget.Button;
+
 import android.content.Intent;
 
 
@@ -8,7 +11,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.higamasa.juniorkanazawa.entity.QuizEntity;
 import android.app.Activity;
-import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.net.Uri;
@@ -20,19 +22,14 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-
-
-import com.higamasa.juniorkanazawa.entity.QuizEntity;
-
 
 import java.util.ArrayList;
 
@@ -65,6 +62,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private int correctSound;
 	private int incorrectSound;
 	private int AnswerNumber;
+	private FrameLayout frameLayout;
 	/**
 	 * ATTENTION: This was auto-generated to implement the App Indexing API.
 	 * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -76,7 +74,9 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 //		return super.onTouchEvent(event);
 		if(event.getAction() == MotionEvent.ACTION_UP){
 				if(nextFlag) {
+//					CorrectAnimation();
 					next();
+
 				}
 		}
 		return true;
@@ -96,7 +96,9 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 				.build();
 
 		correctSound = soundPool.load(this, R.raw.correct, 1);
+		incorrectSound = soundPool.load(this,R.raw.incorrect, 1);
 //		incorrectSound = soundPool.load(this, R.raw.incorrect,1)
+
 
 		setQuestion(nStatement);
 		// ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -109,7 +111,12 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		Intent ArrayIntent = getIntent();
 		answerList = (ArrayList<QuizEntity>) ArrayIntent.getSerializableExtra("yearAll");
 		String.format("%d", answerList.get(sNumber).getId());
-
+		correctImage = (ImageView) findViewById(R.id.correctImage);
+		correctImage.setImageResource(R.drawable.maru200);
+		correctImage.setVisibility(View.INVISIBLE);
+		IncorrectImage = (ImageView)findViewById(R.id.IncorrectImage);
+		IncorrectImage.setImageResource(R.drawable.incorrect200);
+		IncorrectImage.setVisibility(View.INVISIBLE);
 		Statement = (TextView) findViewById(R.id.statement);
 		Statement.setText(answerList.get(sNumber).getStatement());
 
@@ -127,6 +134,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 		AnswerNumber = answerList.get(sNumber).getAnswer();
 		Answer = AnswerSelect(AnswerNumber);
+
 		FirstButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -163,13 +171,15 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		if (((Button) view).getText().equals(Answer)) {
 			//正解の時
 			correct++;
+
 			soundPool.play(correctSound, 1.0f, 1.0f, 0, 0, 1);
-			CorrectAnimation(view);
+			CorrectAnimation();
 
 
 		} else {
+
 			//不正解の時
-			soundPool.play(incorrectSound,1.0f,1.0f,0,0,1);
+			soundPool.play(incorrectSound,2.0f,2.0f,0,0,1);
 			IncorrectAnimation(view);
 		}
 		switch (AnswerNumber) {
@@ -232,15 +242,34 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	public void onClick(View view) {
 	}
 
-	public void CorrectAnimation(View view) {
-		correctImage = (ImageView) findViewById(R.id.correctImage);
-		correctImage.setImageResource(R.drawable.maru1);
+	public void CorrectAnimation() {
 //		correctImage.setVisibility(View.INVISIBLE);
+
 		anim_start_correct = AnimationUtils.loadAnimation(this, R.anim.anim_start);
-		anim_end = AnimationUtils.loadAnimation(this, R.anim.anim_end);
+		anim_start_correct.setAnimationListener(new Animation.AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+//				correctImage.setVisibility(View.INVISIBLE);
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				correctImage.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+
+			}
+		});
+		correctImage.startAnimation(anim_start_correct);
+
+//		nextFlag = true;
+
+// anim_end = AnimationUtils.loadAnimation(this, R.anim.anim_end);
 //		if (Animation) {
 //			Animation = false;
-			correctImage.startAnimation(anim_start_correct);
+
 //			correctImage.setVisibility(View.VISIBLE);
 //		} else {
 //			Animation = true;
@@ -260,9 +289,24 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 	}
 	public void IncorrectAnimation(View view){
-		IncorrectImage = (ImageView)findViewById(R.id.IncorrectImage);
-		IncorrectImage.setImageResource(R.drawable.incorrect);
+
 		anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
+		anim_start_incorrect.setAnimationListener(new Animation.AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				IncorrectImage.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+
+			}
+		});
 		IncorrectImage.startAnimation(anim_start_incorrect);
 
 	}

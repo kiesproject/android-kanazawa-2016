@@ -98,7 +98,7 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
                 .build();
 
         correctSound = soundPool.load(this, R.raw.correct, 1);
-//		incorrectSound = soundPool.load(this, R.raw.incorrect,1)
+		incorrectSound = soundPool.load(this, R.raw.incorrect,1);
 
         setQuestion(nStatement, yStatement);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -115,6 +115,12 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
         Random  randomYear = new Random();
         sNumber = randomQuestion.nextInt(50);
         yNumber = randomYear.nextInt(1);
+        correctImage = (ImageView) findViewById(R.id.correctImage);
+        correctImage.setImageResource(R.drawable.maru200);
+        correctImage.setVisibility(View.INVISIBLE);
+        IncorrectImage = (ImageView)findViewById(R.id.IncorrectImage);
+        IncorrectImage.setImageResource(R.drawable.incorrect200);
+        IncorrectImage.setVisibility(View.INVISIBLE);
 
         Statement = (TextView) findViewById(R.id.statement);
         Statement.setText(allList.get(yNumber).getQuizzes().get(sNumber).getStatement());
@@ -262,13 +268,27 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     }
 
     public void CorrectAnimation(View view) {
-        correctImage = (ImageView) findViewById(R.id.correctImage);
-        correctImage.setImageResource(R.drawable.maru1);
-//		correctImage.setVisibility(View.INVISIBLE);
+
         anim_start_correct = AnimationUtils.loadAnimation(this, R.anim.anim_start);
-        anim_end = AnimationUtils.loadAnimation(this, R.anim.anim_end);
-//		if (Animation) {
-//			Animation = false;
+//        anim_end = AnimationUtils.loadAnimation(this, R.anim.anim_end);
+////		if (Animation) {
+////			Animation = false;
+        anim_start_correct.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+//				correctImage.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                correctImage.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         correctImage.startAnimation(anim_start_correct);
 //			correctImage.setVisibility(View.VISIBLE);
 //		} else {
@@ -289,9 +309,23 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
 
     }
     public void IncorrectAnimation(View view){
-        IncorrectImage = (ImageView)findViewById(R.id.IncorrectImage);
-        IncorrectImage.setImageResource(R.drawable.incorrect);
         anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
+        anim_start_incorrect.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+//
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                IncorrectImage.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         IncorrectImage.startAnimation(anim_start_incorrect);
 
     }
