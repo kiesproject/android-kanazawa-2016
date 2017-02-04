@@ -1,13 +1,28 @@
 package com.higamasa.juniorkanazawa;
 
+import android.view.ViewGroup;
+import android.widget.Button;
+
+import android.content.Intent;
+
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.higamasa.juniorkanazawa.entity.QuizEntity;
 import android.app.Activity;
-import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Button;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,12 +34,14 @@ import android.view.View;
 import java.util.ArrayList;
 
 public class QuizActivity extends Activity implements View.OnClickListener {
-	ArrayList<QuizEntity> answerList;	//問題list
+	private boolean nextFlag = false;
 
-	private int correct = 0;		//正解数
-	private int nStatement = 0;		//statement番号
+	ArrayList<QuizEntity> answerList;    //問題list
 
-	private String Answer;			//正解の文字列
+	private int correct = 0;        //正解数
+	private int nStatement = 0;        //statement番号
+
+	private String Answer;            //正解の文字列
 
 	private TextView Statement;
 	private TextView Title;
@@ -35,25 +52,75 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private Button FourthButton;
 
 	private ImageView correctImage;
+	private ImageView IncorrectImage;
+	private boolean Animation = true;
+	private Animation anim_start_correct;
+	private Animation anim_start_incorrect;
+	private Animation anim_end;
+	private SoundPool soundPool;
+	private AudioAttributes audioAttributes;
+	private int correctSound;
+	private int incorrectSound;
+	private int AnswerNumber;
+	private FrameLayout frameLayout;
+	/**
+	 * ATTENTION: This was auto-generated to implement the App Indexing API.
+	 * See https://g.co/AppIndexing/AndroidStudio for more information.
+	 */
+	private GoogleApiClient client;
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+//		return super.onTouchEvent(event);
+		if(event.getAction() == MotionEvent.ACTION_UP){
+				if(nextFlag) {
+//					CorrectAnimation();
+					next();
+
+				}
+		}
+		return true;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_quiz);
+		audioAttributes = new AudioAttributes.Builder()
+				.setUsage(AudioAttributes.USAGE_GAME)
+				.setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+				.build();
+		soundPool = new SoundPool.Builder()
+				.setAudioAttributes(audioAttributes)
+				.setMaxStreams(2)
+				.build();
+
+		correctSound = soundPool.load(this, R.raw.correct, 1);
+		incorrectSound = soundPool.load(this,R.raw.incorrect, 1);
+//		incorrectSound = soundPool.load(this, R.raw.incorrect,1)
+
 
 		setQuestion(nStatement);
+		// ATTENTION: This was auto-generated to implement the App Indexing API.
+		// See https://g.co/AppIndexing/AndroidStudio for more information.
+		client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 	}
 
 	//クイズの挿入
-	public void setQuestion(int sNumber){
+	public void setQuestion(int sNumber) {
 		Intent ArrayIntent = getIntent();
-		answerList = (ArrayList<QuizEntity>) ArrayIntent.getSerializableExtra("all");
+		answerList = (ArrayList<QuizEntity>) ArrayIntent.getSerializableExtra("yearAll");
 		String.format("%d", answerList.get(sNumber).getId());
-
-		Statement = (TextView)findViewById(R.id.statement);
+		correctImage = (ImageView) findViewById(R.id.correctImage);
+		correctImage.setImageResource(R.drawable.maru200);
+		correctImage.setVisibility(View.INVISIBLE);
+		IncorrectImage = (ImageView)findViewById(R.id.IncorrectImage);
+		IncorrectImage.setImageResource(R.drawable.incorrect200);
+		IncorrectImage.setVisibility(View.INVISIBLE);
+		Statement = (TextView) findViewById(R.id.statement);
 		Statement.setText(answerList.get(sNumber).getStatement());
 
-		Title = (TextView)findViewById(R.id.title);
+		Title = (TextView) findViewById(R.id.title);
 		Title.setText(answerList.get(sNumber).getTitle());
 
 		FirstButton = (Button) findViewById(R.id.button0);
@@ -65,13 +132,14 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		FourthButton = (Button) findViewById(R.id.button3);
 		FourthButton.setText(answerList.get(sNumber).getFourth());
 
-		int AnswerNumber = answerList.get(sNumber).getAnswer();
+		AnswerNumber = answerList.get(sNumber).getAnswer();
 		Answer = AnswerSelect(AnswerNumber);
 
 		FirstButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				AnswerJudge(findViewById(R.id.button0));
+
 			}
 		});
 		SecondButton.setOnClickListener(new View.OnClickListener() {
@@ -95,63 +163,157 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	}
 
 	//正誤判定
-	public void AnswerJudge(View view){
-		if (((Button)view).getText().equals(Answer)){
+	public void AnswerJudge(View view) {
+		if (nextFlag) {
+			next();
+			return;
+		}
+		if (((Button) view).getText().equals(Answer)) {
 			//正解の時
 			correct++;
+
+			soundPool.play(correctSound, 1.0f, 1.0f, 0, 0, 1);
 			CorrectAnimation();
-				next(view);
-		}
-		else{
+
+
+		} else {
+
 			//不正解の時
-			next(view);
+			soundPool.play(incorrectSound,2.0f,2.0f,0,0,1);
+			IncorrectAnimation(view);
 		}
+		switch (AnswerNumber) {
+			case 1:
+				FirstButton.setBackgroundResource(R.drawable.correct_color);
+				break;
+			case 2:
+				SecondButton.setBackgroundResource(R.drawable.correct_color);
+				break;
+			case 3:
+				ThirdButton.setBackgroundResource(R.drawable.correct_color);
+				break;
+			case 4:
+				FourthButton.setBackgroundResource(R.drawable.correct_color);
+				break;
+		}
+		nextFlag = true;
 	}
 
 	//正解の番号を文字列に変換
-	public String AnswerSelect(int aNumber){
+	public String AnswerSelect(int aNumber) {
 		String AnswerText = null;
 
-		switch(aNumber){
+		switch (aNumber) {
 			case 1:
-				AnswerText =  answerList.get(nStatement).getFirst();
+				AnswerText = answerList.get(nStatement).getFirst();
 				break;
 			case 2:
-				AnswerText =  answerList.get(nStatement).getSecond();
+				AnswerText = answerList.get(nStatement).getSecond();
 				break;
 			case 3:
-				AnswerText =  answerList.get(nStatement).getThird();
+				AnswerText = answerList.get(nStatement).getThird();
 				break;
 			case 4:
-				AnswerText =  answerList.get(nStatement).getFourth();
+				AnswerText = answerList.get(nStatement).getFourth();
 				break;
 		}
 		return AnswerText;
 	}
 
 	//次の問題へ移行
-	public void next(View view){
+	public void next() {
+		nextFlag = false;
 		++nStatement;
-		if(nStatement < answerList.size()){
+		if (nStatement < answerList.size()) {
 			setQuestion(nStatement);
-		}
-		else{
-			Intent CorrectIntent = new Intent(QuizActivity.this,QuizResult.class);
-			CorrectIntent.putExtra("correct",correct);
-			CorrectIntent.putExtra("nStatement",nStatement);
+		} else {
+			Intent CorrectIntent = new Intent(QuizActivity.this, QuizResult.class);
+			CorrectIntent.putExtra("correct", correct);
+			CorrectIntent.putExtra("nStatement", nStatement);
 			startActivity(CorrectIntent);
 		}
+		FirstButton.setBackgroundResource(R.drawable.round_button);
+		SecondButton.setBackgroundResource(R.drawable.round_button);
+		ThirdButton.setBackgroundResource(R.drawable.round_button);
+		FourthButton.setBackgroundResource(R.drawable.round_button);
 	}
 
 	@Override
 	public void onClick(View view) {
 	}
-	public void CorrectAnimation(){
-		correctImage =(ImageView)findViewById(R.id.correct);
-		correctImage.setImageResource(R.drawable.maru);
-		AlphaAnimation alpha = new AlphaAnimation(0,1);
-		alpha.setDuration(3000);
-		alpha.setFillBefore(true);
-		correctImage.startAnimation(alpha);
+
+	public void CorrectAnimation() {
+//		correctImage.setVisibility(View.INVISIBLE);
+
+		anim_start_correct = AnimationUtils.loadAnimation(this, R.anim.anim_start);
+		anim_start_correct.setAnimationListener(new Animation.AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+//				correctImage.setVisibility(View.INVISIBLE);
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				correctImage.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+
+			}
+		});
+		correctImage.startAnimation(anim_start_correct);
+
+//		nextFlag = true;
+
+// anim_end = AnimationUtils.loadAnimation(this, R.anim.anim_end);
+//		if (Animation) {
+//			Animation = false;
+
+//			correctImage.setVisibility(View.VISIBLE);
+//		} else {
+//			Animation = true;
+//			correctImage.startAnimation(anim_end);
+//			correctImage.setVisibility(View.GONE);
+//		}
+//
+
+// .setListener(new ViewPropertyAnimatorListenerAdapter()) {
+//				correctImage.setVisibility(View.INVISIBLE);
+//				.start();
+
+//		AlphaAnimation alpha = new AlphaAnimation(0,1);
+//		alpha.setDuration(3000);
+//		alpha.setFillBefore(true);
+//		correctImage.startAnimation(alpha);
+
 	}
+	public void IncorrectAnimation(View view){
+
+		anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
+		anim_start_incorrect.setAnimationListener(new Animation.AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				IncorrectImage.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+
+			}
+		});
+		IncorrectImage.startAnimation(anim_start_incorrect);
+
+	}
+
+
+
+
+
+
 }
