@@ -3,7 +3,6 @@ package com.higamasa.juniorkanazawa;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,10 +14,16 @@ import android.widget.TextView;
 public class QuizResult extends AppCompatActivity{
 
 	int correct;
-	int nStatement;
+	int sNumber;
+
+	double percentage;
 
 	private TextView cStatement;
 	private TextView rStatement;
+
+	private TextView pText;
+
+	private TextView gradingText;
 
 	private Button schoolButton;
 	private Button ageButton;
@@ -30,15 +35,20 @@ public class QuizResult extends AppCompatActivity{
 
 		Intent intent = getIntent();
 		correct = intent.getIntExtra("correct",correct);
-		nStatement = intent.getIntExtra("nStatement",nStatement);
-//		Log.d("correctN",String.valueOf(correct));
+		sNumber = intent.getIntExtra("sNumber",sNumber);
 
-//	public void setResult(int correct, int state){
 		cStatement = (TextView)findViewById(R.id.correctView);
 		cStatement.setText(String.valueOf(correct));
 
 		rStatement = (TextView)findViewById(R.id.statementView);
-		rStatement.setText(String.valueOf(nStatement));
+		rStatement.setText(String.valueOf(sNumber));
+
+		percentage = (double) correct/ (double) sNumber*100;
+		pText = (TextView)findViewById(R.id.percentageView);
+		pText.setText(String.valueOf(((int) percentage)));
+
+		gradingText = (TextView) findViewById(R.id.gradingView);
+		correctJudge(gradingText,correct, sNumber);
 
 		schoolButton = (Button)findViewById(R.id.schoolButton);
 		ageButton = (Button)findViewById(R.id.ageButton);
@@ -57,5 +67,24 @@ public class QuizResult extends AppCompatActivity{
 				startActivity(backButton);
 			}
 		});
+	}
+
+	public TextView correctJudge(TextView text,int correct, int nState){
+		if (correct/nState*100 == 100){
+			text.setText("ジュニア金沢検定に認定!!");
+	}
+		else if (correct/nState*100 < 100 && correct/nState*100 >= 90){
+			text.setText("ゴールドカードに認定!!");
+		}
+		else if (correct/nState*100 < 90 && correct/nState*100 >= 80){
+			text.setText("シルバーカードに認定!!");
+		}
+		else if (correct/nState*100 < 80 && correct/nState*100 >= 70){
+			text.setText("ブロンズカードに認定!!");
+		}
+		else{
+			text.setText("もう少し頑張ろう!!");
+		}
+		return text;
 	}
 }
