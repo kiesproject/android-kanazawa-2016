@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import com.higamasa.juniorkanazawa.entity.QuizEntity;
 import com.higamasa.juniorkanazawa.repository.QuizRepository;
@@ -50,22 +51,27 @@ public class QuizChoice extends AppCompatActivity{
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,data);
         listView.setAdapter(arrayAdapter);
+        Button button = (Button)findViewById(R.id.total);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QuizChoice.this,AllQuizActivity.class);
+                intent.putExtra("All",yearList);
+                startActivity(intent);
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent , View view, int position, long l) {
-                ListView listView = (ListView) parent;
+//                ListView listView = (ListView) parent;
                 Intent intent = new Intent(QuizChoice.this,QuizActivity.class);
 
-                intent.putExtra("all",yearList.get(position).getQuizzes());
+                intent.putExtra("yearAll",yearList.get(position).getQuizzes());
 //                Bundle bundle = new Bundle();
                 startActivity(intent);
                 //  yearList.get(position).quizzes;
             }
         });
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,int position,long id) {
-//
-//            }
-//
+
     }
 }

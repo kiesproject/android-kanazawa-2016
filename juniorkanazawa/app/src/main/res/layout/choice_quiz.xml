@@ -75,7 +75,7 @@
                 android:textSize="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/sougou"
+                android:id="@+id/total"
                 android:background="#f9a825"
                 android:layout_margin="4dp" />
             <ListView
