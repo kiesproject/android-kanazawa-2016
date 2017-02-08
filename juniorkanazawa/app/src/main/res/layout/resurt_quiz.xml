@@ -11,102 +11,135 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:orientation="vertical">
 
         <TextView
-            android:text="正答数"
-            android:textSize="40sp"
-            android:layout_width="185dp"
-            android:layout_height="wrap_content"
-            />
-
-        <TextView
-            android:text="正答率"
-            android:textSize="40sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-
+            android:gravity="center"
+            android:text="＜結果発表＞"
+            android:textSize="40dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="4">
 
         <TextView
-            android:layout_width="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/nCorrectView"
+            android:gravity="right"
+            android:text="正答数"
+            android:textSize="40sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/correctView"
-            android:textSize="50sp"
-            android:layout_weight="0.21"/>
+            android:gravity="right"
+            android:textSize="40sp"
+            android:layout_weight="0.72"/>
 
         <TextView
             android:text="/"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="60sp"
+            android:textSize="40sp"
             />
 
         <TextView
-            android:layout_width="5dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/statementView"
-            android:textSize="50sp"
-            android:layout_weight="0.28"/>
+            android:gravity="left"
+            android:textSize="40sp"
+            android:layout_weight="1.13"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/percentageView"
-            android:textSize="70sp"
-            android:layout_weight="0.30"/>
-
-        <TextView
-            android:text="%"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="50sp"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="0.41"
-        android:weightSum="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/gradingView"
-            android:textSize="70sp"
-            android:layout_weight="1.60"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="0.01"
+        android:weightSum="5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/rCorrectView"
+            android:gravity="right"
+            android:text="正答率"
+            android:textSize="40sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/percentageView"
+            android:textSize="40sp"
+            android:gravity="right"
+            android:layout_weight="0.93"/>
+
+        <TextView
+            android:text="%"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/percentView"
+            android:textSize="40sp"
+            android:layout_gravity="left"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical">
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="あなたのレベルは"
+            android:gravity="center"
+            android:textSize="30sp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/gradingView"
+            android:textSize="60sp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         >
+
         <Button
             android:text="小/中学校選択へ"
             android:textSize="15sp"
-            android:layout_width="100dp"
-            android:layout_height="116dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:id="@+id/schoolButton"
             android:layout_weight="1"/>
 
         <Button
             android:text="年代選択へ"
             android:textSize="15sp"
-            android:layout_width="100dp"
-            android:layout_height="116dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:id="@+id/ageButton"
             android:layout_weight="1"/>
     </LinearLayout>

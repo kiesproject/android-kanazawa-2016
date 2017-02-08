@@ -2,13 +2,7 @@ package com.higamasa.juniorkanazawa;
 
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import android.content.Intent;
-
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.higamasa.juniorkanazawa.entity.QuizEntity;
 import android.app.Activity;
 import android.media.AudioAttributes;
@@ -73,11 +67,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private int incorrectSound;
 	private int AnswerNumber;
 	private FrameLayout frameLayout;
-	/**
-	 * ATTENTION: This was auto-generated to implement the App Indexing API.
-	 * See https://g.co/AppIndexing/AndroidStudio for more information.
-	 */
-	private GoogleApiClient client;
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
