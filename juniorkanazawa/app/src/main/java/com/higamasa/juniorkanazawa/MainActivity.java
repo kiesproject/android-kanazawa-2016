@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.higamasa.juniorkanazawa.repository.QuizRepository;
 
@@ -16,13 +17,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 		final QuizRepository repo = new QuizRepository(this);
 
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        ImageButton eButton = (ImageButton)findViewById(R.id.elementbutton);
+		ImageButton juButton = (ImageButton)findViewById(R.id.juniorbutton);
+
+        eButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //				repo.loadQuiz();
 //				System.out.print("onClick");
 				Intent intent = new Intent(MainActivity.this,QuizChoice.class);
+				startActivity(intent);
+			}
+		});
+		juButton.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View view){
+				Intent intent = new Intent(MainActivity.this, QuizChoice.class);
 				startActivity(intent);
 			}
 		});

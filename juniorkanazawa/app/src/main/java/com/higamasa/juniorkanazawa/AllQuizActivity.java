@@ -330,10 +330,5 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
 
     }
 
-
-
-
-
-
 }
 
