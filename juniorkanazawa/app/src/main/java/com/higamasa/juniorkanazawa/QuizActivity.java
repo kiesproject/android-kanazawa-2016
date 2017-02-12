@@ -30,6 +30,7 @@ import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -154,10 +155,8 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 		thirdButton = (Button) findViewById(R.id.button2);
 		thirdButton.setText(answerList.get(sNumber).getThird());
-
 		fourthButton = (Button) findViewById(R.id.button3);
 		fourthButton.setText(answerList.get(sNumber).getFourth());
-
 		firstButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
