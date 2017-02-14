@@ -3,6 +3,7 @@ package com.higamasa.juniorkanazawa;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -62,9 +63,9 @@ public class QuizResult extends AppCompatActivity{
 		percent.setText("%");
 
 		bar = (RatingBar)findViewById(R.id.ratingBar);
-		bar.setNumStars(4);
-		bar.setStepSize(1);
-		bar.setIsIndicator(false);
+		bar.setNumStars(3);
+		bar.setStepSize((float) 0.5);
+		bar.setIsIndicator(true);
 		barJudge(bar,correct,sNumber);
 
 		gradingText = (TextView) findViewById(R.id.gradingView);
@@ -89,16 +90,24 @@ public class QuizResult extends AppCompatActivity{
 		});
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		if (keyCode == KeyEvent.KEYCODE_BACK){
+			return false;
+		}
+		return  super.onKeyDown(keyCode, event);
+	}
+
 	//Rating Barの判定
 	public RatingBar barJudge(RatingBar rBar,int correct, int nState){
 		double c = (double)correct;		//double型のcorrect
 		double ns = (double)nState;		//double型のnState
 
 		if (c/ns*100 == 100){
-			rBar.setRating(4);
+			rBar.setRating(3);
 		}
 		else if ((c/ns)*100 < 100 && (c/ns)*100 >= 90){
-			rBar.setRating(3);
+			rBar.setRating((float)2.5);
 		}
 		else if ((c/ns)*100 < 90 && (c/ns)*100 >= 80){
 			rBar.setRating(2);

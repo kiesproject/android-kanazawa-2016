@@ -1,8 +1,6 @@
 package com.higamasa.juniorkanazawa;
 
 import android.content.Intent;
-
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -23,7 +21,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;

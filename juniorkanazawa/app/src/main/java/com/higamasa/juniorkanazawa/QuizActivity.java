@@ -48,12 +48,11 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private TextView Statement;
 	private TextView Title;
 
+	private int[] ButtonId;
+	private String[] AnswerStr;
 
-//	private Button[] selectButton;
-	private Button firstButton;
-	private Button secondButton;
-	private Button thirdButton;
-	private Button fourthButton;
+
+	private Button[] selectButton;
 
 	private ImageView correctImage;
 	private ImageView IncorrectImage;
@@ -115,63 +114,86 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		Statement = (TextView) findViewById(R.id.statement);
 		Statement.setText(answerList.get(sNumber).getStatement());
 
+
 		Title = (TextView) findViewById(R.id.title);
 		Title.setText(answerList.get(sNumber).getTitle());
 
-		firstAnswer = answerList.get(sNumber).getFirst();
+
+		firstAnswer	 = answerList.get(sNumber).getFirst();
 		secondAnswer = answerList.get(sNumber).getSecond();
-		thirdAnswer = answerList.get(sNumber).getThird();
+		thirdAnswer	 = answerList.get(sNumber).getThird();
 		fourthAnswer = answerList.get(sNumber).getFourth();
+
 
 		AnswerNumber = answerList.get(sNumber).getAnswer();
 		Answer = AnswerSelect(AnswerNumber);
 
-//		selectAnswer = new String[]{firstAnswer,secondAnswer,thirdAnswer,fourthAnswer};
-
 //		selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
+//		idButton = new Button[]{(Button)findViewById(R.id.button0),(Button)findViewById(R.id.button1),(Button)findViewById(R.id.button2),(Button)findViewById(R.id.button3)};
 //		Random random = new Random();
-//		int select = random.nextInt(4);
-//		List<Button> list = Arrays.asList(selectButton[select]);
-//		Collections.shuffle(list);
-//		selectButton = (Button[])list.toArray(new Button[list.size()]);
+//		int[] select = new int[4];
+//		for (int i=0; i<idButton.length; i++){
+//			for (int j=0,n=selectButton.length; j<n; j++){
+//				select[j] = random.nextInt(4);
+//				selectButton[select[j]] = idButton[i];
+//				int x = select[j];
+//				for (j=0; j<n; j++){
+//					if (select[j] == x)
+//						break;
+//				}
+//			}
+//		}
 
-		firstButton = (Button) findViewById(R.id.button0);
-		firstButton.setText(answerList.get(sNumber).getFirst());
 
-		secondButton = (Button) findViewById(R.id.button1);
-		secondButton.setText(answerList.get(sNumber).getSecond());
+		selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
+		ButtonId = new int[]{R.id.button0,R.id.button1,R.id.button2,R.id.button3};
+		AnswerStr = new String[]{
+				answerList.get(sNumber).getFirst(),
+				answerList.get(sNumber).getSecond(),
+				answerList.get(sNumber).getThird(),
+				answerList.get(sNumber).getFourth()
+		};
 
-		thirdButton = (Button) findViewById(R.id.button2);
-		thirdButton.setText(answerList.get(sNumber).getThird());
 
-		fourthButton = (Button) findViewById(R.id.button3);
-		fourthButton.setText(answerList.get(sNumber).getFourth());
-
-		firstButton.setOnClickListener(new View.OnClickListener() {
+		selectButton[0] = (Button) findViewById(R.id.button0);
+		selectButton[0].setText(answerList.get(sNumber).getFirst());
+		selectButton[0].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				AnswerJudge(findViewById(R.id.button0));
 
 			}
 		});
-		secondButton.setOnClickListener(new View.OnClickListener() {
+
+		selectButton[1] = (Button) findViewById(R.id.button1);
+		selectButton[1].setText(answerList.get(sNumber).getSecond());
+		selectButton[1].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				AnswerJudge(findViewById(R.id.button1));
 			}
 		});
-		thirdButton.setOnClickListener(new View.OnClickListener() {
+
+		selectButton[2] = (Button) findViewById(R.id.button2);
+		selectButton[2].setText(answerList.get(sNumber).getThird());
+		selectButton[2].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				AnswerJudge(findViewById(R.id.button2));
 			}
 		});
-		fourthButton.setOnClickListener(new View.OnClickListener() {
+
+		selectButton[3] = (Button) findViewById(R.id.button3);
+		selectButton[3].setText(answerList.get(sNumber).getFourth());
+		selectButton[3].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				AnswerJudge(findViewById(R.id.button3));
 			}
 		});
+
+
+
 	}
 
 	//正誤判定
@@ -193,16 +215,16 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		}
 		switch (AnswerNumber) {
 			case 1:
-				firstButton.setBackgroundResource(R.drawable.correct_color);
+				selectButton[0].setBackgroundResource(R.drawable.correct_color);
 				break;
 			case 2:
-				secondButton.setBackgroundResource(R.drawable.correct_color);
+				selectButton[1].setBackgroundResource(R.drawable.correct_color);
 				break;
 			case 3:
-				thirdButton.setBackgroundResource(R.drawable.correct_color);
+				selectButton[2].setBackgroundResource(R.drawable.correct_color);
 				break;
 			case 4:
-				fourthButton.setBackgroundResource(R.drawable.correct_color);
+				selectButton[3].setBackgroundResource(R.drawable.correct_color);
 				break;
 		}
 		nextFlag = true;
@@ -214,19 +236,15 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 		switch(answerNumber){
 			case 1:
-//				AnswerText = answerList.get(nStatement).getFirst();
 				answerText = firstAnswer;
 				break;
 			case 2:
-//				answerText = answerList.get(nStatement).getSecond();
 				answerText = secondAnswer;
 				break;
 			case 3:
-//				answerText = answerList.get(nStatement).getThird();
 				answerText = thirdAnswer;
 				break;
 			case 4:
-//				answerText = answerList.get(nStatement).getFourth();
 				answerText = fourthAnswer;
 				break;
 		}
@@ -246,10 +264,10 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			CorrectIntent.putExtra("sNumber",sNumber);
 			startActivity(CorrectIntent);
 		}
-		firstButton.setBackgroundResource(R.drawable.round_button);
-		secondButton.setBackgroundResource(R.drawable.round_button);
-		thirdButton.setBackgroundResource(R.drawable.round_button);
-		fourthButton.setBackgroundResource(R.drawable.round_button);
+		selectButton[0].setBackgroundResource(R.drawable.round_button);
+		selectButton[1].setBackgroundResource(R.drawable.round_button);
+		selectButton[2].setBackgroundResource(R.drawable.round_button);
+		selectButton[3].setBackgroundResource(R.drawable.round_button);
 	}
 
 	@Override

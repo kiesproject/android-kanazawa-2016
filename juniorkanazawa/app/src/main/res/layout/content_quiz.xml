@@ -25,13 +25,6 @@
             android:text="○○○○年　第□問"
             android:layout_alignParentLeft="true"
             android:textSize="25dp" />
-        <Button
-            android:text="メニュー"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:layout_weight="1"
-            android:textSize="27dp" />
     </LinearLayout>
 
 <LinearLayout
@@ -66,7 +59,6 @@
             android:text="この大会は、国民に希望をあたえることと、体育を純粋なスポーツにすることを目標に計画され、第２回大会が「初の地方大会」として1947年に石川県で開催されました。この大会をなんというでしょうか。"
             android:textSize="25dp"
             />
-
     </FrameLayout>
 
     <Button
