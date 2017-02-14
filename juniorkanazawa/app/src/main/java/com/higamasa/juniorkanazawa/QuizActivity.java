@@ -39,7 +39,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	ArrayList<QuizEntity> answerList;    //問題list
 
 	private String Answer;            //正解の文字列
-
+	private static int clickButtonIndex = 0;
 	private String firstAnswer;
 	private String secondAnswer;
 	private String thirdAnswer;
@@ -126,7 +126,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 
 		AnswerNumber = answerList.get(sNumber).getAnswer();
-		Answer = AnswerSelect(AnswerNumber);
 
 //		selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
 //		idButton = new Button[]{(Button)findViewById(R.id.button0),(Button)findViewById(R.id.button1),(Button)findViewById(R.id.button2),(Button)findViewById(R.id.button3)};
@@ -145,7 +144,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 //		}
 
 
-		selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
+		selectButton = new Button[4];
 		ButtonId = new int[]{R.id.button0,R.id.button1,R.id.button2,R.id.button3};
 		AnswerStr = new String[]{
 				answerList.get(sNumber).getFirst(),
@@ -155,6 +154,26 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		};
 
 
+		{
+			ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(0,1,2,3));
+			Collections.shuffle(list);
+			for(int i=0;i<list.size();i++){
+				int index = list.get(i);
+				clickButtonIndex = i;
+				selectButton[i] = (Button) findViewById(ButtonId[i]);
+				selectButton[i].setText(AnswerStr[index]);
+				selectButton[i].setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						AnswerJudge(findViewById(ButtonId[clickButtonIndex]));
+					}
+				});
+			}
+		}
+
+
+		Answer = AnswerSelect(AnswerNumber);
+/*
 		selectButton[0] = (Button) findViewById(R.id.button0);
 		selectButton[0].setText(answerList.get(sNumber).getFirst());
 		selectButton[0].setOnClickListener(new View.OnClickListener() {
@@ -191,7 +210,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 				AnswerJudge(findViewById(R.id.button3));
 			}
 		});
-
+*/
 
 
 	}
@@ -213,41 +232,14 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			soundPool.play(incorrectSound,2.0f,2.0f,0,0,1);
 			IncorrectAnimation(view);
 		}
-		switch (AnswerNumber) {
-			case 1:
-				selectButton[0].setBackgroundResource(R.drawable.correct_color);
-				break;
-			case 2:
-				selectButton[1].setBackgroundResource(R.drawable.correct_color);
-				break;
-			case 3:
-				selectButton[2].setBackgroundResource(R.drawable.correct_color);
-				break;
-			case 4:
-				selectButton[3].setBackgroundResource(R.drawable.correct_color);
-				break;
-		}
+		selectButton[AnswerNumber-1].setBackgroundResource(R.drawable.correct_color);
 		nextFlag = true;
 	}
 
 	//正解の番号を文字列に変換
 	public String AnswerSelect(int answerNumber){
 		String answerText = null;
-
-		switch(answerNumber){
-			case 1:
-				answerText = firstAnswer;
-				break;
-			case 2:
-				answerText = secondAnswer;
-				break;
-			case 3:
-				answerText = thirdAnswer;
-				break;
-			case 4:
-				answerText = fourthAnswer;
-				break;
-		}
+		answerText = AnswerStr[answerNumber-1];
 		return answerText;
 	}
 
