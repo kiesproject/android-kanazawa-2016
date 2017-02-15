@@ -38,15 +38,22 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 	ArrayList<QuizEntity> answerList;    //問題list
 
-	private String answerText;            //正解の文字列
-	private int answerNumber;
-	private String[] answer = new String[4];
+	private String Answer;            //正解の文字列
 
-	private TextView statement;
-	
-	private TextView title;
-	
-	private Button[] selectButton = new Button[4];
+	private String firstAnswer;
+	private String secondAnswer;
+	private String thirdAnswer;
+	private String fourthAnswer;
+
+	private TextView Statement;
+	private TextView Title;
+
+
+//	private Button[] selectButton;
+	private Button firstButton;
+	private Button secondButton;
+	private Button thirdButton;
+	private Button fourthButton;
 
 	private ImageView correctImage;
 	private ImageView IncorrectImage;
@@ -58,6 +65,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private AudioAttributes audioAttributes;
 	private int correctSound;
 	private int incorrectSound;
+	private int AnswerNumber;
 	private FrameLayout frameLayout;
 
 	@Override
@@ -65,7 +73,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 //		return super.onTouchEvent(event);
 		if(event.getAction() == MotionEvent.ACTION_UP){
 				if(nextFlag) {
-//					correctAnimation();
+//					CorrectAnimation();
 					next();
 				}
 		}
@@ -104,113 +112,122 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		IncorrectImage = (ImageView)findViewById(R.id.IncorrectImage);
 		IncorrectImage.setImageResource(R.drawable.incorrect200);
 		IncorrectImage.setVisibility(View.INVISIBLE);
-		statement = (TextView) findViewById(R.id.statement);
-		statement.setText(answerList.get(sNumber).getStatement());
+		Statement = (TextView) findViewById(R.id.statement);
+		Statement.setText(answerList.get(sNumber).getStatement());
 
-		title = (TextView) findViewById(R.id.title);
-		title.setText(answerList.get(sNumber).getTitle());
+		Title = (TextView) findViewById(R.id.title);
+		Title.setText(answerList.get(sNumber).getTitle());
 
-		answer[0] = answerList.get(sNumber).getFirst();
-		answer[1] = answerList.get(sNumber).getSecond();
-		answer[2] = answerList.get(sNumber).getThird();
-		answer[3] = answerList.get(sNumber).getFourth();
+		firstAnswer = answerList.get(sNumber).getFirst();
+		secondAnswer = answerList.get(sNumber).getSecond();
+		thirdAnswer = answerList.get(sNumber).getThird();
+		fourthAnswer = answerList.get(sNumber).getFourth();
 
-		answerNumber = answerList.get(sNumber).getAnswer();
-		answerText = answerSelect(answerNumber);
-		
-		selectButton[0] = (Button) findViewById(R.id.button0);
-		selectButton[0].setText(answerList.get(sNumber).getFirst());
+		AnswerNumber = answerList.get(sNumber).getAnswer();
+		Answer = AnswerSelect(AnswerNumber);
 
-		selectButton[1] = (Button) findViewById(R.id.button1);
-		selectButton[1].setText(answerList.get(sNumber).getSecond());
+//		selectAnswer = new String[]{firstAnswer,secondAnswer,thirdAnswer,fourthAnswer};
 
-		selectButton[2] = (Button) findViewById(R.id.button2);
-		selectButton[2].setText(answerList.get(sNumber).getThird());
+//		selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
+//		Random random = new Random();
+//		int select = random.nextInt(4);
+//		List<Button> list = Arrays.asList(selectButton[select]);
+//		Collections.shuffle(list);
+//		selectButton = (Button[])list.toArray(new Button[list.size()]);
 
-		selectButton[3] = (Button) findViewById(R.id.button3);
-		selectButton[3].setText(answerList.get(sNumber).getFourth());
+		firstButton = (Button) findViewById(R.id.button0);
+		firstButton.setText(answerList.get(sNumber).getFirst());
 
-		selectButton[0].setOnClickListener(new View.OnClickListener() {
+		secondButton = (Button) findViewById(R.id.button1);
+		secondButton.setText(answerList.get(sNumber).getSecond());
+
+		thirdButton = (Button) findViewById(R.id.button2);
+		thirdButton.setText(answerList.get(sNumber).getThird());
+
+		fourthButton = (Button) findViewById(R.id.button3);
+		fourthButton.setText(answerList.get(sNumber).getFourth());
+
+		firstButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				answerJudge(findViewById(R.id.button0));
+				AnswerJudge(findViewById(R.id.button0));
 
 			}
 		});
-		selectButton[1].setOnClickListener(new View.OnClickListener() {
+		secondButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				answerJudge(findViewById(R.id.button1));
+				AnswerJudge(findViewById(R.id.button1));
 			}
 		});
-		selectButton[2].setOnClickListener(new View.OnClickListener() {
+		thirdButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				answerJudge(findViewById(R.id.button2));
+				AnswerJudge(findViewById(R.id.button2));
 			}
 		});
-		selectButton[3].setOnClickListener(new View.OnClickListener() {
+		fourthButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				answerJudge(findViewById(R.id.button3));
+				AnswerJudge(findViewById(R.id.button3));
 			}
 		});
 	}
 
 	//正誤判定
-	public void answerJudge(View view) {
+	public void AnswerJudge(View view) {
 		if (nextFlag) {
 			next();
 			return;
 		}
-		if (((Button) view).getText().equals(answerText)) {
+		if (((Button) view).getText().equals(Answer)) {
 			//正解の時
 			correct++;
 			soundPool.play(correctSound,1.0f,1.0f,0,0,1);
-			correctAnimation(view);
+			CorrectAnimation(view);
 		}
 		else {
 			//不正解の時
 			soundPool.play(incorrectSound,2.0f,2.0f,0,0,1);
 			IncorrectAnimation(view);
 		}
-//		switch (answerNumber) {
-//			case 1:
-//				selectButton[0].setBackgroundResource(R.drawable.correct_color);
-//				break;
-//			case 2:
-//				selectButton[1].setBackgroundResource(R.drawable.correct_color);
-//				break;
-//			case 3:
-//				selectButton[2].setBackgroundResource(R.drawable.correct_color);
-//				break;
-//			case 4:
-//				selectButton[3].setBackgroundResource(R.drawable.correct_color);
-//				break;
-//		}
+		switch (AnswerNumber) {
+			case 1:
+				firstButton.setBackgroundResource(R.drawable.correct_color);
+				break;
+			case 2:
+				secondButton.setBackgroundResource(R.drawable.correct_color);
+				break;
+			case 3:
+				thirdButton.setBackgroundResource(R.drawable.correct_color);
+				break;
+			case 4:
+				fourthButton.setBackgroundResource(R.drawable.correct_color);
+				break;
+		}
 		nextFlag = true;
 	}
 
 	//正解の番号を文字列に変換
-	public String answerSelect(int answerNumber){
+	public String AnswerSelect(int answerNumber){
 		String answerText = null;
 
 		switch(answerNumber){
 			case 1:
-//				AnswerText = answerList.get(sNumber).getFirst();
-				answerText = answer[0];
+//				AnswerText = answerList.get(nStatement).getFirst();
+				answerText = firstAnswer;
 				break;
 			case 2:
-//				answerText = answerList.get(sNumber).getSecond();
-				answerText = answer[1];
+//				answerText = answerList.get(nStatement).getSecond();
+				answerText = secondAnswer;
 				break;
 			case 3:
-//				answerText = answerList.get(sNumber).getThird();
-				answerText = answer[2];
+//				answerText = answerList.get(nStatement).getThird();
+				answerText = thirdAnswer;
 				break;
 			case 4:
-//				answerText = answerList.get(sNumber).getFourth();
-				answerText = answer[3];
+//				answerText = answerList.get(nStatement).getFourth();
+				answerText = fourthAnswer;
 				break;
 		}
 		return answerText;
@@ -229,17 +246,17 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			CorrectIntent.putExtra("sNumber",sNumber);
 			startActivity(CorrectIntent);
 		}
-		selectButton[0].setBackgroundResource(R.drawable.round_button);
-		selectButton[1].setBackgroundResource(R.drawable.round_button);
-		selectButton[2].setBackgroundResource(R.drawable.round_button);
-		selectButton[3].setBackgroundResource(R.drawable.round_button);
+		firstButton.setBackgroundResource(R.drawable.round_button);
+		secondButton.setBackgroundResource(R.drawable.round_button);
+		thirdButton.setBackgroundResource(R.drawable.round_button);
+		fourthButton.setBackgroundResource(R.drawable.round_button);
 	}
 
 	@Override
 	public void onClick(View view) {
 	}
 
-	public void correctAnimation(View view) {
+	public void CorrectAnimation(View view) {
 //		correctImage.setVisibility(View.INVISIBLE);
 
 		anim_start_correct = AnimationUtils.loadAnimation(this, R.anim.anim_start);
@@ -285,7 +302,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 //		correctImage.startAnimation(alpha);
 
 	}
-	
 	public void IncorrectAnimation(View view){
 
 		anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
@@ -306,5 +322,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			}
 		});
 		IncorrectImage.startAnimation(anim_start_incorrect);
+
 	}
 }

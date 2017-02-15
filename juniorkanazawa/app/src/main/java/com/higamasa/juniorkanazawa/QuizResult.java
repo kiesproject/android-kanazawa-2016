@@ -21,7 +21,7 @@ public class QuizResult extends AppCompatActivity{
 
 	private TextView nCorrect;
 	private TextView cStatement;
-	private TextView pStatement;
+	private TextView rStatement;
 
 	private TextView rCorrect;
 	private TextView pText;
@@ -48,8 +48,8 @@ public class QuizResult extends AppCompatActivity{
 		cStatement = (TextView)findViewById(R.id.correctView);
 		cStatement.setText(String.valueOf(correct));
 
-		pStatement = (TextView)findViewById(R.id.statementView);
-		pStatement.setText(String.valueOf(sNumber));
+		rStatement = (TextView)findViewById(R.id.statementView);
+		rStatement.setText(String.valueOf(sNumber));
 
 		rCorrect = (TextView)findViewById(R.id.rCorrectView);
 		rCorrect.setText("正答率");
