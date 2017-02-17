@@ -11,16 +11,15 @@ import com.higamasa.juniorkanazawa.repository.QuizRepository;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 		final QuizRepository repo = new QuizRepository(this);
-
-        ImageButton eButton = (ImageButton)findViewById(R.id.elementbutton);
+		ImageButton eButton = (ImageButton)findViewById(R.id.elementbutton);
 		ImageButton juButton = (ImageButton)findViewById(R.id.juniorbutton);
 
-        eButton.setOnClickListener(new View.OnClickListener() {
+		eButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //				repo.loadQuiz();

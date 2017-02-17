@@ -3,7 +3,9 @@ package com.higamasa.juniorkanazawa;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Intent;
+
 import com.higamasa.juniorkanazawa.entity.QuizEntity;
+
 import android.app.Activity;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -27,6 +29,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -38,21 +41,27 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
 	ArrayList<QuizEntity> answerList;    //問題list
 
-	private String Answer;            //正解の文字列
-	private static int clickButtonIndex = 0;
-	private String firstAnswer;
-	private String secondAnswer;
-	private String thirdAnswer;
-	private String fourthAnswer;
+	private TextView title;
 
-	private TextView Statement;
-	private TextView Title;
+	private TextView statement;
+//	private HashMap<String,String[]> map;
+	private String answerText;		//正解の文字列
+	private int answerNumber;		//正解の数値
+	private String[] answer = new String[4];
+//	private String[] answerStr = new String[]{
+//			answerList.get(sNumber).getFirst(),
+//			answerList.get(sNumber).getSecond(),
+//			answerList.get(sNumber).getThird(),
+//			answerList.get(sNumber).getFourth()
+//	};
 
-	private int[] ButtonId;
-	private String[] AnswerStr;
-
-
-	private Button[] selectButton;
+	private Button[] selectButton = new Button[4];
+//	private int[] buttonId = new int[]{R.id.button0, R.id.button1, R.id.button2, R.id.button3};
+//	private Button[] idButton = new Button[]{	(Button) findViewById(R.id.button0),
+//												(Button) findViewById(R.id.button2),
+//												(Button) findViewById(R.id.button2),
+//												(Button) findViewById(R.id.button3)
+//											};
 
 	private ImageView correctImage;
 	private ImageView IncorrectImage;
@@ -64,17 +73,17 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private AudioAttributes audioAttributes;
 	private int correctSound;
 	private int incorrectSound;
-	private int AnswerNumber;
+
 	private FrameLayout frameLayout;
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 //		return super.onTouchEvent(event);
 		if(event.getAction() == MotionEvent.ACTION_UP){
-				if(nextFlag) {
+			if(nextFlag) {
 //					CorrectAnimation();
-					next();
-				}
+				next();
+			}
 		}
 		return true;
 	}
@@ -90,10 +99,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 				.setUsage(AudioAttributes.USAGE_GAME)
 				.setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
 				.build();
-		soundPool = new SoundPool.Builder()
-				.setAudioAttributes(audioAttributes)
-				.setMaxStreams(2)
-				.build();
+		soundPool = new SoundPool.Builder().setAudioAttributes(audioAttributes).setMaxStreams(2).build();
 
 		correctSound = soundPool.load(this, R.raw.correct, 1);
 		incorrectSound = soundPool.load(this,R.raw.incorrect, 1);
@@ -105,123 +111,73 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		Intent ArrayIntent = getIntent();
 		answerList = (ArrayList<QuizEntity>) ArrayIntent.getSerializableExtra("yearAll");
 		String.format("%d", answerList.get(sNumber).getId());
+
 		correctImage = (ImageView) findViewById(R.id.correctImage);
 		correctImage.setImageResource(R.drawable.maru200);
 		correctImage.setVisibility(View.INVISIBLE);
 		IncorrectImage = (ImageView)findViewById(R.id.IncorrectImage);
 		IncorrectImage.setImageResource(R.drawable.incorrect200);
 		IncorrectImage.setVisibility(View.INVISIBLE);
-		Statement = (TextView) findViewById(R.id.statement);
-		Statement.setText(answerList.get(sNumber).getStatement());
+
+		title = (TextView) findViewById(R.id.title);
+		title.setText(answerList.get(sNumber).getTitle());
+
+		statement = (TextView) findViewById(R.id.statement);
+		statement.setText(answerList.get(sNumber).getStatement());
+
+		answer[0] = answerList.get(sNumber).getFirst();
+		answer[1] = answerList.get(sNumber).getSecond();
+		answer[2] = answerList.get(sNumber).getThird();
+		answer[3] = answerList.get(sNumber).getFourth();
+
+		answerNumber = answerList.get(sNumber).getAnswer();
+		answerText = answerSelect(answerNumber);
 
 
-		Title = (TextView) findViewById(R.id.title);
-		Title.setText(answerList.get(sNumber).getTitle());
 
-
-		firstAnswer	 = answerList.get(sNumber).getFirst();
-		secondAnswer = answerList.get(sNumber).getSecond();
-		thirdAnswer	 = answerList.get(sNumber).getThird();
-		fourthAnswer = answerList.get(sNumber).getFourth();
-
-
-		AnswerNumber = answerList.get(sNumber).getAnswer();
-
-//		selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
-//		idButton = new Button[]{(Button)findViewById(R.id.button0),(Button)findViewById(R.id.button1),(Button)findViewById(R.id.button2),(Button)findViewById(R.id.button3)};
-//		Random random = new Random();
-//		int[] select = new int[4];
-//		for (int i=0; i<idButton.length; i++){
-//			for (int j=0,n=selectButton.length; j<n; j++){
-//				select[j] = random.nextInt(4);
-//				selectButton[select[j]] = idButton[i];
-//				int x = select[j];
-//				for (j=0; j<n; j++){
-//					if (select[j] == x)
-//						break;
-//				}
-//			}
-//		}
-
-
-		selectButton = new Button[4];
-		ButtonId = new int[]{R.id.button0,R.id.button1,R.id.button2,R.id.button3};
-		AnswerStr = new String[]{
-				answerList.get(sNumber).getFirst(),
-				answerList.get(sNumber).getSecond(),
-				answerList.get(sNumber).getThird(),
-				answerList.get(sNumber).getFourth()
-		};
-
-
-		{
-			ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(0,1,2,3));
-			Collections.shuffle(list);
-			for(int i=0;i<list.size();i++){
-				int index = list.get(i);
-				clickButtonIndex = i;
-				selectButton[i] = (Button) findViewById(ButtonId[i]);
-				selectButton[i].setText(AnswerStr[index]);
-				selectButton[i].setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						AnswerJudge(findViewById(ButtonId[clickButtonIndex]));
-					}
-				});
-			}
-		}
-
-
-		Answer = AnswerSelect(AnswerNumber);
-/*
 		selectButton[0] = (Button) findViewById(R.id.button0);
+		selectButton[1] = (Button) findViewById(R.id.button1);
+		selectButton[2] = (Button) findViewById(R.id.button2);
+		selectButton[3] = (Button) findViewById(R.id.button3);
+
+
 		selectButton[0].setText(answerList.get(sNumber).getFirst());
 		selectButton[0].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				AnswerJudge(findViewById(R.id.button0));
-
+				answerJudge(findViewById(R.id.button0));
 			}
 		});
-
-		selectButton[1] = (Button) findViewById(R.id.button1);
 		selectButton[1].setText(answerList.get(sNumber).getSecond());
 		selectButton[1].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				AnswerJudge(findViewById(R.id.button1));
+				answerJudge(findViewById(R.id.button1));
 			}
 		});
-
-		selectButton[2] = (Button) findViewById(R.id.button2);
 		selectButton[2].setText(answerList.get(sNumber).getThird());
 		selectButton[2].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				AnswerJudge(findViewById(R.id.button2));
+				answerJudge(findViewById(R.id.button2));
 			}
 		});
-
-		selectButton[3] = (Button) findViewById(R.id.button3);
 		selectButton[3].setText(answerList.get(sNumber).getFourth());
 		selectButton[3].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				AnswerJudge(findViewById(R.id.button3));
+				answerJudge(findViewById(R.id.button3));
 			}
 		});
-*/
-
-
 	}
 
 	//正誤判定
-	public void AnswerJudge(View view) {
+	public void answerJudge(View view) {
 		if (nextFlag) {
 			next();
 			return;
 		}
-		if (((Button) view).getText().equals(Answer)) {
+		if (((Button) view).getText().equals(answerText)) {
 			//正解の時
 			correct++;
 			soundPool.play(correctSound,1.0f,1.0f,0,0,1);
@@ -232,14 +188,41 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			soundPool.play(incorrectSound,2.0f,2.0f,0,0,1);
 			IncorrectAnimation(view);
 		}
-		selectButton[AnswerNumber-1].setBackgroundResource(R.drawable.correct_color);
+		switch (answerNumber) {
+			case 1:
+				selectButton[0].setBackgroundResource(R.drawable.correct_color);
+				break;
+			case 2:
+				selectButton[1].setBackgroundResource(R.drawable.correct_color);
+				break;
+			case 3:
+				selectButton[2].setBackgroundResource(R.drawable.correct_color);
+				break;
+			case 4:
+				selectButton[3].setBackgroundResource(R.drawable.correct_color);
+				break;
+		}
 		nextFlag = true;
 	}
 
 	//正解の番号を文字列に変換
-	public String AnswerSelect(int answerNumber){
+	public String answerSelect(int answerNumber){
 		String answerText = null;
-		answerText = AnswerStr[answerNumber-1];
+
+		switch(answerNumber){
+			case 1:
+				answerText = answer[0];
+				break;
+			case 2:
+				answerText = answer[1];
+				break;
+			case 3:
+				answerText = answer[2];
+				break;
+			case 4:
+				answerText = answer[3];
+				break;
+		}
 		return answerText;
 	}
 
@@ -312,6 +295,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 //		correctImage.startAnimation(alpha);
 
 	}
+
 	public void IncorrectAnimation(View view){
 
 		anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
@@ -332,6 +316,5 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			}
 		});
 		IncorrectImage.startAnimation(anim_start_incorrect);
-
 	}
 }
