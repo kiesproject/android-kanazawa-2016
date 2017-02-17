@@ -302,7 +302,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		anim_start_incorrect.setAnimationListener(new Animation.AnimationListener() {
 			@Override
 			public void onAnimationStart(Animation animation) {
-
 			}
 
 			@Override
