@@ -1,5 +1,10 @@
 package com.higamasa.juniorkanazawa;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.os.PersistableBundle;
+import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Intent;
@@ -33,10 +38,12 @@ import java.util.Random;
 
 public class QuizActivity extends Activity implements View.OnClickListener {
 	private boolean nextFlag = false;
-
 	private int correct = 0;		//正解数
 	private int sNumber = 0;		//statement番号
-
+	private int mNumber[] = new int[4];
+	private int a = 0;
+    private int[] idButton = {R.id.button0,R.id.button1, R.id.button2,R.id.button3};
+    private String[] selectAnswer2;
 	ArrayList<QuizEntity> answerList;    //問題list
 
 	private String Answer;            //正解の文字列
@@ -45,29 +52,28 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private String secondAnswer;
 	private String thirdAnswer;
 	private String fourthAnswer;
-
+	private String selectAnswer[];
 	private TextView Statement;
 	private TextView Title;
 
 
-//	private Button[] selectButton;
+	private Button[] selectButton;
 	private Button firstButton;
 	private Button secondButton;
 	private Button thirdButton;
 	private Button fourthButton;
+	private Button breakButton;
 
 	private ImageView correctImage;
 	private ImageView IncorrectImage;
-	private boolean Animation = true;
 	private Animation anim_start_correct;
 	private Animation anim_start_incorrect;
-	private Animation anim_end;
 	private SoundPool soundPool;
 	private AudioAttributes audioAttributes;
 	private int correctSound;
 	private int incorrectSound;
 	private int AnswerNumber;
-	private FrameLayout frameLayout;
+
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -81,9 +87,55 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		return true;
 	}
 
+        @Override
+        protected void onStop () {
+            super.onStop();
+            SharedPreferences prefer = getSharedPreferences("file", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefer.edit();
+            editor.putInt("s", sNumber);
+            editor.putInt("c", correct);
+            editor.commit();
+
+        }
+
+
 	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+			alertDialog.setTitle("検定を中断しますか?");
+			alertDialog.setMessage("検定結果は保存されません");
+			alertDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialogInterface, int i) {
+					finish();
+				}
+			});
+			alertDialog.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialogInterface, int i) {
+				}
+			});
+			alertDialog.show();
+			return super.onKeyDown(keyCode, event);
+		}else{
+			return false;
+		}
+	}
+
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        		Intent intent = getIntent();
+//		sNumber = intent.getIntExtra("i",sNumber);
+//		correct = intent.getIntExtra("c",correct);
+//    }
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.content_quiz);
 
 		setQuestion(sNumber);
@@ -98,8 +150,30 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 				.build();
 
 		correctSound = soundPool.load(this, R.raw.correct, 1);
-		incorrectSound = soundPool.load(this,R.raw.incorrect, 1);
-//		incorrectSound = soundPool.load(this, R.raw.incorrect,1)
+		incorrectSound = soundPool.load(this, R.raw.incorrect, 1);
+		breakButton = (Button)findViewById(R.id.breakButton);
+		breakButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				AlertDialog.Builder breakDialog = new AlertDialog.Builder(QuizActivity.this);
+                breakDialog.setTitle("検定を中断しますか?");
+                breakDialog.setMessage("検定結果は保存されません");
+                breakDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                breakDialog.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                breakDialog.show();
+
+
+            }
+		});
 	}
 
 	//クイズの挿入
@@ -127,50 +201,66 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		AnswerNumber = answerList.get(sNumber).getAnswer();
 		Answer = AnswerSelect(AnswerNumber);
 
-//		selectAnswer = new String[]{firstAnswer,secondAnswer,thirdAnswer,fourthAnswer};
+		selectAnswer = new String[]{firstAnswer,secondAnswer,thirdAnswer,fourthAnswer};
+        List<String> list = Arrays.asList(selectAnswer);
+        Collections.shuffle(list);
+        selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
+        selectAnswer2 = list.toArray(new String[list.size()]);
+        for (int i = 0;i < 4;i++){
+            final int n = i;
+            selectButton[i] = (Button)findViewById(idButton[i]);
+            selectButton[i].setText(selectAnswer2[i]);
+            selectButton[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AnswerJudge(findViewById(idButton[n]));
+                }
+            });
+        }
+//		Random randomQuestion = new Random();
 
-//		selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
 //		Random random = new Random();
 //		int select = random.nextInt(4);
 //		List<Button> list = Arrays.asList(selectButton[select]);
 //		Collections.shuffle(list);
 //		selectButton = (Button[])list.toArray(new Button[list.size()]);
 
-		firstButton = (Button) findViewById(R.id.button0);
-		firstButton.setText(answerList.get(sNumber).getFirst());
+//		firstButton = (Button) findViewById(R.id.button0);
+//		firstButton.setText(answerList.get(sNumber).getFirst());
+//
+//		secondButton = (Button) findViewById(R.id.button1);
+//		secondButton.setText(answerList.get(sNumber).getSecond());
+//
+//		thirdButton = (Button) findViewById(R.id.button2);
+//		thirdButton.setText(answerList.get(sNumber).getThird());
+//		fourthButton = (Button) findViewById(R.id.button3);
+//		fourthButton.setText(answerList.get(sNumber).getFourth());
+//		firstButton.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				AnswerJudge(findViewById(R.id.button0));
+//
+//			}
+//		});
+//		secondButton.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				AnswerJudge(findViewById(R.id.button1));
+//			}
+//		});
+//		thirdButton.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				AnswerJudge(findViewById(R.id.button2));
+//			}
+//		});
+//		fourthButton.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				AnswerJudge(findViewById(R.id.button3));
+//			}
+//		});
 
-		secondButton = (Button) findViewById(R.id.button1);
-		secondButton.setText(answerList.get(sNumber).getSecond());
-
-		thirdButton = (Button) findViewById(R.id.button2);
-		thirdButton.setText(answerList.get(sNumber).getThird());
-		fourthButton = (Button) findViewById(R.id.button3);
-		fourthButton.setText(answerList.get(sNumber).getFourth());
-		firstButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				AnswerJudge(findViewById(R.id.button0));
-
-			}
-		});
-		secondButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				AnswerJudge(findViewById(R.id.button1));
-			}
-		});
-		thirdButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				AnswerJudge(findViewById(R.id.button2));
-			}
-		});
-		fourthButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				AnswerJudge(findViewById(R.id.button3));
-			}
-		});
 	}
 
 	//正誤判定
@@ -190,20 +280,29 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			soundPool.play(incorrectSound,2.0f,2.0f,0,0,1);
 			IncorrectAnimation(view);
 		}
-		switch (AnswerNumber) {
-			case 1:
-				firstButton.setBackgroundResource(R.drawable.correct_color);
-				break;
-			case 2:
-				secondButton.setBackgroundResource(R.drawable.correct_color);
-				break;
-			case 3:
-				thirdButton.setBackgroundResource(R.drawable.correct_color);
-				break;
-			case 4:
-				fourthButton.setBackgroundResource(R.drawable.correct_color);
-				break;
-		}
+        if (selectAnswer2[0] == Answer){
+            selectButton[0].setBackgroundResource(R.drawable.correct_color);
+        }else if (selectAnswer2[1] == Answer){
+            selectButton[1].setBackgroundResource(R.drawable.correct_color);
+        }else if (selectAnswer2[2] == Answer){
+            selectButton[2].setBackgroundResource(R.drawable.correct_color);
+        }else if (selectAnswer2[3] == Answer){
+            selectButton[3].setBackgroundResource(R.drawable.correct_color);
+        }
+//		switch (Answer) {
+//			case 1:
+//				firstButton.setBackgroundResource(R.drawable.correct_color);
+//				break;
+//			case 2:
+//				secondButton.setBackgroundResource(R.drawable.correct_color);
+//				break;
+//			case 3:
+//				thirdButton.setBackgroundResource(R.drawable.correct_color);
+//				break;
+//			case 4:
+//				fourthButton.setBackgroundResource(R.drawable.correct_color);
+//				break;
+//		}
 		nextFlag = true;
 	}
 
@@ -245,10 +344,10 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			CorrectIntent.putExtra("sNumber",sNumber);
 			startActivity(CorrectIntent);
 		}
-		firstButton.setBackgroundResource(R.drawable.round_button);
-		secondButton.setBackgroundResource(R.drawable.round_button);
-		thirdButton.setBackgroundResource(R.drawable.round_button);
-		fourthButton.setBackgroundResource(R.drawable.round_button);
+		selectButton[0].setBackgroundResource(R.drawable.round_button);
+		selectButton[1].setBackgroundResource(R.drawable.round_button);
+		selectButton[2].setBackgroundResource(R.drawable.round_button);
+		selectButton[3].setBackgroundResource(R.drawable.round_button);
 	}
 
 	@Override
@@ -278,27 +377,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		correctImage.startAnimation(anim_start_correct);
 
 //		nextFlag = true;
-
-// anim_end = AnimationUtils.loadAnimation(this, R.anim.anim_end);
-//		if (Animation) {
-//			Animation = false;
-
-//			correctImage.setVisibility(View.VISIBLE);
-//		} else {
-//			Animation = true;
-//			correctImage.startAnimation(anim_end);
-//			correctImage.setVisibility(View.GONE);
-//		}
-//
-
-// .setListener(new ViewPropertyAnimatorListenerAdapter()) {
-//				correctImage.setVisibility(View.INVISIBLE);
-//				.start();
-
-//		AlphaAnimation alpha = new AlphaAnimation(0,1);
-//		alpha.setDuration(3000);
-//		alpha.setFillBefore(true);
-//		correctImage.startAnimation(alpha);
 
 	}
 	public void IncorrectAnimation(View view){
