@@ -21,10 +21,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center|top"
             android:src="@drawable/title"
             android:background="#90EE90"
-            android:gravity="center"/>
+            android:gravity="center" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -33,15 +33,17 @@
             android:src="@drawable/elebutton"
             android:background="#90EE90"
             android:id="@+id/elementbutton"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_weight="1"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center|bottom"
             android:src="@drawable/jubutton"
             android:background="#90EE90"
             android:id="@+id/juniorbutton"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>

@@ -68,7 +68,7 @@ public class QuizChoice extends AppCompatActivity{
 
 
                 intent.putExtra("yearAll",yearList.get(position).getQuizzes());
-
+                intent.putExtra("position",position);
 //                Bundle bundle = new Bundle();
                 startActivity(intent);
                 //  yearList.get(position).quizzes;

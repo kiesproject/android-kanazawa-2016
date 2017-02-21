@@ -28,6 +28,9 @@
             android:theme="@style/AppTheme">
 
         </activity>
+        <activity android:name=".BreakQuizActivity"
+            android:label="ジュニア金沢検定"
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".QuizResult"
             android:label="ジュニア金沢検定"
