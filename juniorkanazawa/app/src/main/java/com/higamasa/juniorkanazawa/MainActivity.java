@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.higamasa.juniorkanazawa.repository.QuizRepository;
@@ -25,15 +24,12 @@ public class MainActivity extends AppCompatActivity {
 		repo.loadQuiz();
 		final ArrayList<YearQuiz> breakList = repo.getQuizList();
 
-
-		ImageButton eButton = (ImageButton) findViewById(R.id.elementbutton);
-		ImageButton juButton = (ImageButton) findViewById(R.id.juniorbutton);
+		ImageButton eButton = (ImageButton)findViewById(R.id.elementbutton);
+		ImageButton juButton = (ImageButton)findViewById(R.id.juniorbutton);
 
 		eButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-//				repo.loadQuiz();
-//				System.out.print("onClick");
+            @Override
+            public void onClick(View view) {
 				Intent intent = new Intent(MainActivity.this, QuizChoice.class);
 				startActivity(intent);
 			}
@@ -48,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 		SharedPreferences preferences = getSharedPreferences("file", MODE_PRIVATE);
 		 correct = preferences.getInt("c", -1);
 		 sNumber = preferences.getInt("s", -1);
+
 		if (correct > 0 && sNumber > 0) {
 			AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 			alertDialog.setTitle("前回の戻る？");
@@ -69,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 				}
 			});
 			alertDialog.show();
-
 		}
 	}
 }
