@@ -26,21 +26,18 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     private boolean nextFlag = false;
 
     ArrayList<YearQuiz> allList;    //問題list
-    private int n = 0;
-    private int correct = 0;        //正解数
-    private int sNumber = 0;//statement番号
+    private int correct = 0;    //正解数
+    private int sNumber = 0;    //statement番号
     private int yStatement = 0;
-    private int nNumber[] = {};
+//    private int[][] ysNumber = new int[2][50];
 
-    private String Answer;            //正解の文字列
+    private boolean sJudge = false;
+    private int aNumberStatement = 0;
 
-    private TextView Statement;
-    private TextView Title;
+    private String answer;            //正解の文字列
 
-    private Button FirstButton;
-    private Button SecondButton;
-    private Button ThirdButton;
-    private Button FourthButton;
+    private TextView title;
+    private TextView statement;
 
     private ImageView correctImage;
     private ImageView IncorrectImage;
@@ -52,18 +49,15 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     private AudioAttributes audioAttributes;
     private int correctSound;
     private int incorrectSound;
-    private int AnswerNumber;
-    private boolean num[] = new boolean[50];
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+    private int answerNumber;
+
     private GoogleApiClient client;
     private String[] selectAnswer;
     private String firstAnswer;
     private String secondAnswer;
     private String thirdAnswer;
     private String fourthAnswer;
+
     private Button[] selectButton;
     private Button firstButton;
     private Button secondButton;
@@ -99,8 +93,6 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
         correctSound = soundPool.load(this, R.raw.correct, 1);
 		incorrectSound = soundPool.load(this, R.raw.incorrect,1);
         setQuestion(sNumber, yStatement);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
@@ -108,170 +100,106 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     public void setQuestion(int sNumber, int yNumber) {
         Intent ArrayIntent = getIntent();
         allList = (ArrayList<YearQuiz>) ArrayIntent.getSerializableExtra("All");
-//        String.format("%d", allList.get(sNumber).getId());
-        Random randomQuestion = new Random();
-        Random randomYear = new Random();
-//        sNumber = noRepeatRandom(sNumber);
-//        for (int i = 0; i < 50; i++) {
-//            n = randomQuestion.nextInt(50);
-//            sNumber[i] = n;
-//            int a = sNumber[i];
-//            for (i = 0; i < 50; i++)
-//                if (sNumber[i] == a)
-//                    break;
-//        }
-        sNumber = randomQuestion.nextInt(50);
-        yNumber = randomYear.nextInt(1);
-//        for (int i = 0; i < 50; i++) {
-//            num[i] = false;
-//        Arrays.fill(num,false);
 
-//        for (int i = 0;i<50;i++){
-//            int p = randomQuestion.nextInt(50);
-//            if (num[p] == false){
-//                num[p] = true;
-//            }
-//        }
+        correctImage = (ImageView) findViewById(R.id.correctImage);
+        correctImage.setImageResource(R.drawable.maru200);
+        correctImage.setVisibility(View.INVISIBLE);
+        IncorrectImage = (ImageView) findViewById(R.id.IncorrectImage);
+        IncorrectImage.setImageResource(R.drawable.incorrect200);
+        IncorrectImage.setVisibility(View.INVISIBLE);
 
-//        for (int i = 0;i<50;i++){
-//            int n = randomQuestion.nextInt(50);
-//            int temp = sNumber[i];
-//            sNumber[i] = sNumber[n];
-//            sNumber[n] = temp;
-//        }
-//        for (int i = 0;i<50;i++) {
-//            if (!num[sNumber]) {
+        title = (TextView) findViewById(R.id.title);
+        title.setText(allList.get(yNumber).getQuizzes().get(sNumber).getTitle());
 
+        statement = (TextView) findViewById(R.id.statement);
+        statement.setText(allList.get(yNumber).getQuizzes().get(sNumber).getStatement());
 
-//        }
-
-                correctImage = (ImageView) findViewById(R.id.correctImage);
-                correctImage.setImageResource(R.drawable.maru200);
-                correctImage.setVisibility(View.INVISIBLE);
-                IncorrectImage = (ImageView) findViewById(R.id.IncorrectImage);
-                IncorrectImage.setImageResource(R.drawable.incorrect200);
-                IncorrectImage.setVisibility(View.INVISIBLE);
-
-                Statement = (TextView) findViewById(R.id.statement);
-                Statement.setText(allList.get(yNumber).getQuizzes().get(sNumber).getStatement());
-
-                Title = (TextView) findViewById(R.id.title);
-                Title.setText(allList.get(yNumber).getQuizzes().get(sNumber).getTitle());
         firstAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getFirst();
         secondAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getSecond();
         thirdAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getThird();
         fourthAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getFourth();
 
+        String answerText = null;
+        answerNumber = allList.get(yNumber).getQuizzes().get(sNumber).getAnswer();
+        switch (answerNumber) {
+            case 1:
+                answerText = allList.get(yNumber).getQuizzes().get(sNumber).getFirst();
+//              Log.d("aa", String.valueOf(sNumber[n]));
+                break;
+            case 2:
+                answerText = allList.get(yNumber).getQuizzes().get(sNumber).getSecond();
+//              Log.d("aa", String.valueOf(sNumber[n]));
+                break;
+            case 3:
+                answerText = allList.get(yNumber).getQuizzes().get(sNumber).getThird();
+//              Log.d("aa", String.valueOf(sNumber[n]));
+                break;
+            case 4:
+                answerText = allList.get(yNumber).getQuizzes().get(sNumber).getFourth();
+//              Log.d("aa", String.valueOf(sNumber[n]));
+                break;
+        }
+        answer = answerText;
 
-        String AnswerText = null;
-        AnswerNumber = allList.get(yNumber).getQuizzes().get(sNumber).getAnswer();
-                switch (AnswerNumber) {
-                    case 1:
-                        AnswerText = allList.get(yNumber).getQuizzes().get(sNumber).getFirst();
-//                        Log.d("aa", String.valueOf(sNumber[n]));
-                        break;
-                    case 2:
-                        AnswerText = allList.get(yNumber).getQuizzes().get(sNumber).getSecond();
-//                        Log.d("aa", String.valueOf(sNumber[n]));
-                        break;
-                    case 3:
-                        AnswerText = allList.get(yNumber).getQuizzes().get(sNumber).getThird();
-//                        Log.d("aa", String.valueOf(sNumber[n]));
-                        break;
-                    case 4:
-                        AnswerText = allList.get(yNumber).getQuizzes().get(sNumber).getFourth();
-//                        Log.d("aa", String.valueOf(sNumber[n]));
-                        break;
-                }
-                Answer = AnswerText;
-        selectAnswer = new String[]{firstAnswer,secondAnswer,thirdAnswer,fourthAnswer};
+        //項目のランダム
+        selectAnswer = new String[]{firstAnswer, secondAnswer, thirdAnswer, fourthAnswer};
         List<String> list = Arrays.asList(selectAnswer);
         Collections.shuffle(list);
-        selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
+        selectButton = new Button[]{firstButton, secondButton, thirdButton, fourthButton};
         selectAnswer2 = list.toArray(new String[list.size()]);
-        for (int i = 0;i < 4;i++){
-            final int n = i;
-            selectButton[i] = (Button)findViewById(idButton[i]);
-            selectButton[i].setText(selectAnswer2[i]);
-            selectButton[i].setOnClickListener(new View.OnClickListener() {
+        for (int k = 0; k < 4; k++) {
+            final int n = k;
+            selectButton[k] = (Button) findViewById(idButton[k]);
+            selectButton[k].setText(selectAnswer2[k]);
+            selectButton[k].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AnswerJudge(findViewById(idButton[n]));
+                    answerJudge(findViewById(idButton[n]));
                 }
             });
         }
-//                FirstButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        AnswerJudge(findViewById(R.id.button0));
-//
-//                    }
-//                });
-//                SecondButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        AnswerJudge(findViewById(R.id.button1));
-//                    }
-//                });
-//                ThirdButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        AnswerJudge(findViewById(R.id.button2));
-//                    }
-//                });
-//                FourthButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        AnswerJudge(findViewById(R.id.button3));
-//                    }
-//                });
-
-            }
-//        num[sNumber] = true;
-//        }
-
-
+    }
 
     //正誤判定
-    public void AnswerJudge(View view) {
+    public void answerJudge(View view) {
         if (nextFlag) {
             next();
             return;
         }
-        if (((Button) view).getText().equals(Answer)) {
+
+        if (((Button) view).getText().equals(answer)) {
             //正解の時
             correct++;
             soundPool.play(correctSound, 1.0f, 1.0f, 0, 0, 1);
             CorrectAnimation(view);
-
-
         } else {
             //不正解の時
             soundPool.play(incorrectSound,2.0f,2.0f,0,0,1);
             IncorrectAnimation(view);
         }
-        if (selectAnswer2[0] == Answer){
+
+        if (selectAnswer2[0] == answer){
             selectButton[0].setBackgroundResource(R.drawable.correct_color);
-        }else if (selectAnswer2[1] == Answer){
+        }else if (selectAnswer2[1] == answer){
             selectButton[1].setBackgroundResource(R.drawable.correct_color);
-        }else if (selectAnswer2[2] == Answer){
+        }else if (selectAnswer2[2] == answer){
             selectButton[2].setBackgroundResource(R.drawable.correct_color);
-        }else if (selectAnswer2[3] == Answer){
+        }else if (selectAnswer2[3] == answer){
             selectButton[3].setBackgroundResource(R.drawable.correct_color);
         }
         nextFlag = true;
     }
 
-
     //次の問題へ移行
     public void next() {
         nextFlag = false;
-        if (sNumber < allList.get(yStatement).getQuizzes().size()) {
+        if (aNumberStatement<50) {
+            aNumberStatement++;
             setQuestion(sNumber,yStatement);
         } else {
             Intent CorrectIntent = new Intent(AllQuizActivity.this, QuizResult.class);
             CorrectIntent.putExtra("correct", correct);
-            CorrectIntent.putExtra("sNumber", sNumber);
+            CorrectIntent.putExtra("aNumberStatement", aNumberStatement);
             startActivity(CorrectIntent);
         }
         selectButton[0].setBackgroundResource(R.drawable.round_button);
@@ -285,83 +213,38 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     }
 
     public void CorrectAnimation(View view) {
-
         anim_start_correct = AnimationUtils.loadAnimation(this, R.anim.anim_start);
-//        anim_end = AnimationUtils.loadAnimation(this, R.anim.anim_end);
-////		if (Animation) {
-////			Animation = false;
+        
         anim_start_correct.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-//				correctImage.setVisibility(View.INVISIBLE);
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 correctImage.setVisibility(View.GONE);
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
         correctImage.startAnimation(anim_start_correct);
-//			correctImage.setVisibility(View.VISIBLE);
-//		} else {
-//			Animation = true;
-//			correctImage.startAnimation(anim_end);
-//			correctImage.setVisibility(View.GONE);
-//		}
-//
-
-// .setListener(new ViewPropertyAnimatorListenerAdapter()) {
-//				correctImage.setVisibility(View.INVISIBLE);
-//				.start();
-
-//		AlphaAnimation alpha = new AlphaAnimation(0,1);
-//		alpha.setDuration(3000);
-//		alpha.setFillBefore(true);
-//		correctImage.startAnimation(alpha);
-
     }
+    
     public void IncorrectAnimation(View view){
         anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
         anim_start_incorrect.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-//
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 IncorrectImage.setVisibility(View.GONE);
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
         IncorrectImage.startAnimation(anim_start_incorrect);
-
     }
-    public int[] noRepeatRandom(int sNumber[]) {
-        int number[] = new int[50];
-        Random random = new Random();
-        for (int i = 0; i < 50; i++) {
-            sNumber[i] = random.nextInt(50);
-            int a = sNumber[i];
-            for (i = 0; i < 50; i++)
-                if (sNumber[i] == a)
-                    break;
-        }
-        return sNumber;
-//        for (int j = 0;j<50;j++) {
-//            return sNumber[j] = number[j];
-//        }
-    }
-
-
 }
 
