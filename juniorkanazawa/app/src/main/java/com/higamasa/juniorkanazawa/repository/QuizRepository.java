@@ -28,7 +28,7 @@ public class QuizRepository implements Serializable {
     public void loadQuiz() {
         try {
 //            InputStream inputStream = assetManager.open("junior1.json");
-            String jsonString = getStringFromAssets("junior2.json");
+            String jsonString = getStringFromAssets("junior.json");
             JSONObject json = new JSONObject(jsonString).getJSONObject("catalog");
 //            JSONObject juniorArray = json.getJSONObject("junior");
             JSONArray yearsArray = json.getJSONArray("years");
@@ -98,7 +98,7 @@ public class QuizRepository implements Serializable {
     //    public void loadShuffleQuiz() {
 //        try {
 ////            InputStream inputStream = assetManager.open("junior1.json");
-//            String jsonString = getStringFromAssets("junior2.json");
+//            String jsonString = getStringFromAssets("junior.json");
 //            JSONObject json = new JSONObject(jsonString).getJSONObject("catalog");
 //            JSONArray jArray = json.getJSONArray("junior");
 //
