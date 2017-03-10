@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.higamasa.juniorkanazawa.repository.QuizRepository;
@@ -28,20 +27,13 @@ public class MainActivity extends AppCompatActivity {
 		repo.loadQuiz();
 		final ArrayList<YearQuiz> breakList = repo.getQuizList();
 
-		ImageButton eButton = (ImageButton) findViewById(R.id.elementbutton);
-		ImageButton juButton = (ImageButton) findViewById(R.id.juniorbutton);
-		DisplayMetrics dm = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		int height = dm.heightPixels;
-		int width = dm.widthPixels;
-		float xdp = dm.xdpi;
-		float ydp = dm.ydpi;
+
+		ImageButton eButton = (ImageButton)findViewById(R.id.elementbutton);
+		ImageButton juButton = (ImageButton)findViewById(R.id.juniorbutton);
 
 		eButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-//				repo.loadQuiz();
-//				System.out.print("onClick");
+            @Override
+            public void onClick(View view) {
 				Intent intent = new Intent(MainActivity.this, QuizChoice.class);
 				startActivity(intent);
 			}
@@ -56,12 +48,15 @@ public class MainActivity extends AppCompatActivity {
 		SharedPreferences preferences = getSharedPreferences("file", MODE_PRIVATE);
 		 correct = preferences.getInt("c", -1);
 		 sNumber = preferences.getInt("s", -1);
+
 		position = preferences.getInt("position",0);
 		if (sNumber == breakList.get(position).getQuizzes().size())
 			sNumber = -1;
 			correct = -1;
 		Log.d("ssss",String.valueOf(sNumber));
-		if (correct > 0 || sNumber > 0) {
+
+
+		if (correct > 0 && sNumber > 0) {
 			AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 			alertDialog.setTitle("前回の戻る？");
 			alertDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {
@@ -82,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
 				}
 			});
 			alertDialog.show();
-
 		}
 	}
 }

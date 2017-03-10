@@ -1,38 +1,20 @@
 package com.higamasa.juniorkanazawa;
 
 import android.content.Intent;
-
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.higamasa.juniorkanazawa.entity.QuizEntity;
 import android.app.Activity;
-import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import android.support.annotation.IntegerRes;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-
-
-import com.higamasa.juniorkanazawa.entity.QuizEntity;
-
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
