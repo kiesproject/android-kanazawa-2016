@@ -3,13 +3,13 @@
         "years": [
             {
                 "year": 8888,
-                "year_str": "画像選択の問題(全9問)",
+                "year_str": "画像選択の問題(全7問)",
                 "questions": [
                     {
                         "id": 1201,
                         "title": "画像の問題1",
                         "statement": "金沢市は、石川県の県庁所在地（けんちょうしょざいち）です。下の地図（ちず）で金沢市の位置（いち）は①～④の中のどれでしょうか。",
-                        "drawable": "map0208",
+                        "drawable": "map1101",
                         "first": "①",
                         "second": "②",
                         "third": "③",
@@ -19,17 +19,6 @@
                     {
 
                         "id": 1202,
-                        "title": "画像の問題2",
-                        "statement": "次の地図で、県庁所在地（けんちょうしょざいち）である金沢市の位置（いち）は①～④の中のどれでしょうか。",
-                        "first": "①",
-                        "second": "②",
-                        "third": "③",
-                        "fourth": "④",
-                        "answer": "2"
-                    },
-                    {
-
-                        "id": 1203,
                         "title": "画像の問題3",
                         "statement": "金沢市のまちの顔ともいえる兼六園（けんろくえん）は水戸市（みとし）の偕楽園（かいらくえん）、岡山市（おかやまし）の後楽園（こうらくえん）とともに日本三名園（さんめいえん）の一つです。その兼六園のシンボルともいえる次の写真は何でしょうか。",
                         "drawable": "kotoji",
@@ -40,41 +29,54 @@
                         "answer": "3"
                     },
                     {
-                        "id": 1205,
-                        "title": "画像の問題4",
-                        "statement": "地図の○の部分はかつて、石川県で最も大きな湖であったが、現在は3分の2が干拓されて農地となっている。この湖の名前は何か。",
-                        "first": "河北潟(かほくがた)",
-                        "second": "邑地潟(おうちがた)",
-                        "third": "木場潟(きばがた)",
-                        "fourth": "柴山潟（しばやまがた）",
-                        "answer": "1"
+
+                        "id": 1203,
+                        "title": "画像の問題2",
+                        "statement": "次の地図で、県庁所在地（けんちょうしょざいち）である金沢市の位置（いち）は①～④の中のどれでしょうか。",
+                        "drawable": "map1102",
+                        "first": "①",
+                        "second": "②",
+                        "third": "③",
+                        "fourth": "④",
+                        "answer": "2"
                     },
                     {
+//                        "id": 1205,
+//                        "title": "画像の問題4",
+//                        "statement": "地図の○の部分はかつて、石川県で最も大きな湖であったが、現在は3分の2が干拓されて農地となっている。この湖の名前は何か。",
+//                        "drawable": "",
+//                        "first": "河北潟(かほくがた)",
+//                        "second": "邑地潟(おうちがた)",
+//                        "third": "木場潟(きばがた)",
+//                        "fourth": "柴山潟（しばやまがた）",
+//                        "answer": "1"
+//                    },
+                    {
                         "id": 1206,
-                        "title": "画像の問題5",
+                        "title": "画像の問題4",
                         "statement": "次のうち、鉄橋大橋としては国内有数の歴史を持ち、国に指定された 犀川大橋はどれか",
-                        "first": "",
-                        "second": "",
-                        "third": "",
-                        "fourth": "",
+                        "first": "nakanobridge",
+                        "second": "saigawabridge",
+                        "third": "asanobridge",
+                        "fourth": "umenobridge",
                         "answer": "2"
                     },
                     {
                         "id": 1207,
-                        "title": "画像の問題6",
+                        "title": "画像の問題5",
                         "statement": "地図で石川県の県庁所在地である金沢市の位置は①～④のどれか。",
-                        "first": "",
-                        "second": "",
-                        "third": "",
-                        "fourth": "",
-                        "drawable": "",
-                        "answer": "2"
+                        "drawable": "map1110",
+                        "first": "①",
+                        "second": "②",
+                        "third": "③",
+                        "fourth": "④",
+                        "answer": "4"
                     },
                     {
                         "id": 1208,
-                        "title": "画像の問題7",
+                        "title": "画像の問題6",
                         "statement": "金沢には昔を今に伝える古いまちなみが多く残されている。写真は観光客がたくさん訪れる古いまちなみの一つである。何と呼ばれているか。",
-                        "drawable": "",
+                        "drawable": "bukeyashiki",
                         "first": "小将屋敷跡",
                         "second": "武家屋敷跡",
                         "third": "大名屋敷跡",
@@ -83,25 +85,13 @@
                     },
                     {
                         "id": 1209,
-                        "title": "画像の問題8",
+                        "title": "画像の問題7",
                         "statement": "次のうち鉄橋大橋としては国内有数の歴史をもち、国から登録有形文化財に指定された犀川大橋はどの写真か。",
-                        "first": "",
-                        "second": "",
-                        "third": "",
-                        "fourth": "",
-                        "drawable": "",
-                        "answer": "2"
-                    },
-                    {
-                        "id": 1210,
-                        "title": "画像の問題9",
-                        "statement": "次のうち、鉄橋大橋としては国内有数の歴史をもち、国から登録有形文化財に指定された犀川大橋の写真はどれか。",
-                        "first": "",
-                        "second": "",
-                        "third": "",
-                        "fourth": "",
-                        "drawable": "",
-                        "answer": "2"
+                        "first": "nakanobridge",
+                        "second": "asanobridge",
+                        "third": "saigawabridge",
+                        "fourth": "umenobridge",
+                        "answer": "3"
                     }
                 ]
             }
