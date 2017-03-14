@@ -183,6 +183,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			});
 		}
 	}
+
 	//正誤判定
 	public void AnswerJudge(View view) {
 		if (nextFlag) {
@@ -272,6 +273,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		correctImage.startAnimation(anim_start_correct);
 //		nextFlag = true;
 	}
+
 	public void IncorrectAnimation(View view){
 		anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
 		anim_start_incorrect.setAnimationListener(new Animation.AnimationListener() {
