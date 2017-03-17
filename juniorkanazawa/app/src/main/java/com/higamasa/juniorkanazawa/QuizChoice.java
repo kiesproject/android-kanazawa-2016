@@ -23,6 +23,7 @@ import java.util.List;
  */
 
 public class QuizChoice extends AppCompatActivity{
+    private int juniorJudge = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +66,9 @@ public class QuizChoice extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent , View view, int position, long l) {
 //                ListView listView = (ListView) parent;
                 Intent intent = new Intent(QuizChoice.this,QuizActivity.class);
-
-
                 intent.putExtra("yearAll",yearList.get(position).getQuizzes());
                 intent.putExtra("position",position);
+                intent.putExtra("schoolJudge",juniorJudge);
 //                Bundle bundle = new Bundle();
                 startActivity(intent);
                 //  yearList.get(position).quizzes;

@@ -105,6 +105,7 @@ public class BreakQuizActivity extends Activity implements View.OnClickListener 
     private int AnswerNumber;
     private int position;
     private SharedPreferences.Editor editor;
+    private int schoolJudge;
 
 
     @Override
@@ -127,6 +128,7 @@ public class BreakQuizActivity extends Activity implements View.OnClickListener 
         editor.putInt("s", sNumber);
         editor.putInt("c", correct);
         editor.putInt("position",position);
+        editor.putInt("schoolJudge",schoolJudge);
         editor.commit();
         editor.clear();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -173,6 +175,7 @@ public class BreakQuizActivity extends Activity implements View.OnClickListener 
         setContentView(R.layout.content_quiz);
         Intent intent = getIntent();
         position = intent.getIntExtra("position",position);
+        schoolJudge = intent.getIntExtra("schoolJudge",schoolJudge);
         setQuestion(sNumber);
         audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)

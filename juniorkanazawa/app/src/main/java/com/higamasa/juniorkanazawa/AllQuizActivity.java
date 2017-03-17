@@ -1,10 +1,14 @@
 package com.higamasa.juniorkanazawa;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.app.Activity;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -26,21 +30,18 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     private boolean nextFlag = false;
 
     ArrayList<YearQuiz> allList;    //問題list
-    private int n = 0;
-    private int correct = 0;        //正解数
-    private int sNumber = 0;//statement番号
+    private int correct = 0;    //正解数
+    private int sNumber = 0;    //statement番号
     private int yStatement = 0;
-    private int nNumber[] = {};
+//    private int[][] ysNumber = new int[2][50];
+
+    private boolean sJudge = false;
+    private int aNumberStatement = 0;
 
     private String Answer;            //正解の文字列
 
-    private TextView Statement;
     private TextView Title;
-
-    private Button FirstButton;
-    private Button SecondButton;
-    private Button ThirdButton;
-    private Button FourthButton;
+    private TextView Statement;
 
     private ImageView correctImage;
     private ImageView IncorrectImage;
@@ -53,17 +54,14 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     private int correctSound;
     private int incorrectSound;
     private int AnswerNumber;
-    private boolean num[] = new boolean[50];
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+
     private GoogleApiClient client;
     private String[] selectAnswer;
     private String firstAnswer;
     private String secondAnswer;
     private String thirdAnswer;
     private String fourthAnswer;
+
     private Button[] selectButton;
     private Button firstButton;
     private Button secondButton;
@@ -71,6 +69,7 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     private Button fourthButton;
     private String[] selectAnswer2;
     private int[] idButton = {R.id.button0, R.id.button1, R.id.button2, R.id.button3};
+    private int[][] repeat = new int[11][50];
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -81,6 +80,30 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
             }
         }
         return true;
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("検定を中断しますか?");
+            alertDialog.setMessage("検定結果は保存されません");
+            alertDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            });
+            alertDialog.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            alertDialog.show();
+            return super.onKeyDown(keyCode, event);
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -99,8 +122,6 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
         correctSound = soundPool.load(this, R.raw.correct, 1);
         incorrectSound = soundPool.load(this, R.raw.incorrect, 1);
         setQuestion(sNumber, yStatement);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
@@ -109,6 +130,7 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
         Intent ArrayIntent = getIntent();
 
         allList = (ArrayList<YearQuiz>) ArrayIntent.getSerializableExtra("All");
+
 //        String.format("%d", allList.get(sNumber).getId());
         Random randomQuestion = new Random();
         Random randomYear = new Random();
@@ -121,30 +143,38 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
 //                if (sNumber[i] == a)
 //                    break;
 //        }
-        sNumber = randomQuestion.nextInt(50);
-        yNumber = randomYear.nextInt(1);
-        int[][] repeat = new int[0][allList.get(yNumber).getQuizzes().size()];
-        for (int i = 0 ; i < 1; i++){
+        yNumber = randomYear.nextInt(11);
+        sNumber = randomQuestion.nextInt(allList.get(yNumber).getQuizzes().size());
+        Log.e("a", String.valueOf(yNumber));
+        Log.e("b", String.valueOf(sNumber));
+
+        for (int n = 0; n<11;n++){
+            for (int s = 0; s<allList.get(yNumber).getQuizzes().size();s++){
+                if (repeat[n][s] == allList.get(yNumber).getQuizzes().get(sNumber).getId()){
+                    Random random = new Random();
+                    Random random1 = new Random();
+                    int m = yNumber;
+                    yNumber = random.nextInt(11);
+                    sNumber = random1.nextInt(allList.get(yNumber).getQuizzes().size());
+                    Log.e("de", String.valueOf(yNumber));
+                    Log.e("ba", String.valueOf(sNumber));
+                    if (yNumber <= m){
+                        n = 0;
+                        Log.e("w", String.valueOf(yNumber));
+                        Log.e("ww", String.valueOf(sNumber));
+                    }
+                }
+            }
+        }
+        for (int i = 0 ; i < 11; i++){
             for (int j = 0 ; j < allList.get(yNumber).getQuizzes().size() ; j++){
                 if (i == yNumber && j == sNumber){
                     repeat[i][j] = allList.get(yNumber).getQuizzes().get(sNumber).getId();
                 }
             }
         }
-        for (int n = 0; n<1;n++){
-            for (int s = 0; s<allList.get(yNumber).getQuizzes().size();s++){
-                if (repeat[n][s] == repeat[yNumber][sNumber]){
-                    Random random = new Random();
-                    Random random1 = new Random();
-                    int m = yNumber;
-                    yNumber = random.nextInt(1);
-                    sNumber = random1.nextInt(50);
-                    if (yNumber <= m){
-                        n = -1;
-                    }
-                }
-            }
-        }
+        Log.e("aa", String.valueOf(yNumber));
+        Log.e("bb", String.valueOf(sNumber));
 //        for (int i = 0; i < 50; i++) {
 //            num[i] = false;
 //        Arrays.fill(num,false);
@@ -165,25 +195,22 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
 //        for (int i = 0;i<50;i++) {
 //            if (!num[sNumber]) {
 
-
-//        }
-
         correctImage = (ImageView) findViewById(R.id.correctImage);
         correctImage.setImageResource(R.drawable.maru200);
         correctImage.setVisibility(View.INVISIBLE);
         IncorrectImage = (ImageView) findViewById(R.id.IncorrectImage);
         IncorrectImage.setImageResource(R.drawable.incorrect200);
         IncorrectImage.setVisibility(View.INVISIBLE);
-
         Statement = (TextView) findViewById(R.id.statement);
         Statement.setText(allList.get(yNumber).getQuizzes().get(sNumber).getStatement());
-
         Title = (TextView) findViewById(R.id.title);
         Title.setText(allList.get(yNumber).getQuizzes().get(sNumber).getTitle());
         firstAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getFirst();
         secondAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getSecond();
         thirdAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getThird();
         fourthAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getFourth();
+
+
 
 
         String AnswerText = null;
@@ -207,43 +234,46 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
                 break;
         }
         Answer = AnswerText;
+
+        //項目のランダム
+
         selectAnswer = new String[]{firstAnswer, secondAnswer, thirdAnswer, fourthAnswer};
         List<String> list = Arrays.asList(selectAnswer);
         Collections.shuffle(list);
         selectButton = new Button[]{firstButton, secondButton, thirdButton, fourthButton};
         selectAnswer2 = list.toArray(new String[list.size()]);
-        for (int i = 0; i < 4; i++) {
-            final int n = i;
-            selectButton[i] = (Button) findViewById(idButton[i]);
-            selectButton[i].setText(selectAnswer2[i]);
-            selectButton[i].setOnClickListener(new View.OnClickListener() {
+
+        for (int k = 0; k < 4; k++) {
+            final int n = k;
+            selectButton[k] = (Button) findViewById(idButton[k]);
+            selectButton[k].setText(selectAnswer2[k]);
+            selectButton[k].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AnswerJudge(findViewById(idButton[n]));
+                    answerJudge(findViewById(idButton[n]));
                 }
             });
         }
     }
 
-
     //正誤判定
-    public void AnswerJudge(View view) {
+    public void answerJudge(View view) {
         if (nextFlag) {
             next();
             return;
         }
+
         if (((Button) view).getText().equals(Answer)) {
             //正解の時
             correct++;
             soundPool.play(correctSound, 1.0f, 1.0f, 0, 0, 1);
             CorrectAnimation(view);
-
-
         } else {
             //不正解の時
             soundPool.play(incorrectSound, 2.0f, 2.0f, 0, 0, 1);
             IncorrectAnimation(view);
         }
+
         if (selectAnswer2[0] == Answer) {
             selectButton[0].setBackgroundResource(R.drawable.correct_color);
         } else if (selectAnswer2[1] == Answer) {
@@ -256,12 +286,13 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
         nextFlag = true;
     }
 
-
     //次の問題へ移行
     public void next() {
         nextFlag = false;
-        if (sNumber < allList.get(yStatement).getQuizzes().size()) {
+        ++sNumber;
+        if (sNumber < 50) {
             setQuestion(sNumber, yStatement);
+
         } else {
             Intent CorrectIntent = new Intent(AllQuizActivity.this, QuizResult.class);
             CorrectIntent.putExtra("correct", correct);
@@ -279,22 +310,18 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     }
 
     public void CorrectAnimation(View view) {
-
         anim_start_correct = AnimationUtils.loadAnimation(this, R.anim.anim_start);
+
         anim_start_correct.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-//				correctImage.setVisibility(View.INVISIBLE);
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 correctImage.setVisibility(View.GONE);
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
         correctImage.startAnimation(anim_start_correct);
@@ -302,27 +329,25 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
 
     }
 
-    public void IncorrectAnimation(View view) {
+
+    public void IncorrectAnimation(View view){
+
         anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
         anim_start_incorrect.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-//
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 IncorrectImage.setVisibility(View.GONE);
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
         IncorrectImage.startAnimation(anim_start_incorrect);
-
     }
+
 
     public void noRepeatRandom(int sNumber, int yNumber ) {
 

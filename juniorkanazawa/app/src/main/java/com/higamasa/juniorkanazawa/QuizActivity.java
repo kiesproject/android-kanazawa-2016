@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.util.Log;
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private String fourthAnswer;
 	private String[] selectAnswer2;
 
+
 	private Button[] selectButton;
 	private Button firstButton;
 	private Button secondButton;
@@ -73,7 +75,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	private int incorrectSound;
 	private int AnswerNumber;
 	private int position;
-
+	private int schoolJudge;
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -81,7 +83,9 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		if (event.getAction() == MotionEvent.ACTION_UP) {
 			if (nextFlag) {
 //					CorrectAnimation();
+
 				next();
+
 			}
 		}
 		return true;
@@ -95,7 +99,8 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		SharedPreferences.Editor editor = prefer.edit();
 		editor.putInt("s", sNumber);
 		editor.putInt("c", correct);
-		editor.putInt("positon", position);
+		editor.putInt("position", position);
+		editor.putInt("schoolJudge",schoolJudge);
 		editor.commit();
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 		editor = pref.edit();
@@ -104,7 +109,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	}
 
 
-	@Override
+		@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -133,9 +138,10 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_quiz);
-		Intent intent = getIntent();
+        Intent intent = getIntent();
 		position = intent.getIntExtra("position", position);
-		setQuestion(sNumber);
+		schoolJudge = intent.getIntExtra("schoolJudge",schoolJudge);
+        setQuestion(sNumber);
 
 		audioAttributes = new AudioAttributes.Builder()
 				.setUsage(AudioAttributes.USAGE_GAME)
@@ -211,6 +217,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		}
 
 
+
 	}
 
 	//正誤判定
@@ -225,10 +232,22 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			correct++;
 			soundPool.play(correctSound, 1.0f, 1.0f, 0, 0, 1);
 			CorrectAnimation(view);
+			final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+			scrollView.post(new Runnable() {
+				public void run() {
+					scrollView.fullScroll(ScrollView.FOCUS_UP);
+				}
+			});
 		} else {
 			//不正解の時
 			soundPool.play(incorrectSound, 2.0f, 2.0f, 0, 0, 1);
 			IncorrectAnimation(view);
+			final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+			scrollView.post(new Runnable() {
+				public void run() {
+					scrollView.fullScroll(ScrollView.FOCUS_UP);
+				}
+			});
 		}
 		if (selectAnswer2[0] == Answer) {
 			selectButton[0].setBackgroundResource(R.drawable.correct_color);

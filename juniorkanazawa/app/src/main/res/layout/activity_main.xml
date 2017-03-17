@@ -22,10 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:src="@drawable/title"
-            android:background="#90EE90"
-            android:gravity="center" />
-
+            android:src="@drawable/title3"
+            android:background="#00FF7F"
+            android:gravity="center"/>
 
         <ImageButton
             android:layout_width="match_parent"
@@ -45,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:src="@drawable/jubutton"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="20dp"
             android:background="@null"
             android:elevation="3dp"
             android:scaleType="fitXY"
