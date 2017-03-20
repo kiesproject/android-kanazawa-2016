@@ -61,10 +61,11 @@ public class MainActivity extends AppCompatActivity {
         if (sNumber == eBreakList.get(position).getQuizzes().size())
             sNumber = -1;
         correct = -1;
+        Log.d("schoool",String.valueOf(schoolJudge));
         Log.d("ssss", String.valueOf(sNumber));
 //schoolJudgeが0で中学生
         if (schoolJudge == 0) {
-            if (correct > 0 && sNumber > 0) {
+            if (correct > 0 || sNumber > 0) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 alertDialog.setTitle("前回の戻る？");
                 alertDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
 //            schoolJudgeが1で小学生
         }else if (schoolJudge == 1){
-            if (correct > 0 && sNumber > 0) {
+            if (correct > 0 || sNumber > 0) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 alertDialog.setTitle("前回の戻る？");
                 alertDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {

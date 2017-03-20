@@ -30,11 +30,15 @@ public class ElementalChoice extends AppCompatActivity{
         setContentView(R.layout.choice_quiz);
         ListView listView = (ListView)findViewById(R.id.quizList);
         final ElementalRepository repository = new ElementalRepository(this);
+        final ElementalRepository figureRepository = new ElementalRepository(this);
 //        ArrayList<QuizEntity> quizList;
 //        quizList = repository.getQuizList();
         repository.elementalQuiz();
+        figureRepository.loadFigureQuiz();
 //        Log.d("year", String.valueOf(repository));
         final ArrayList<YearQuiz> yearList = repository.getQuizList();
+        final ArrayList<YearQuiz> figureList = figureRepository.getQuizList();
+
 //        if(yearList.isEmpty()){
 //            Log.d("QuizList","isEmpty");
 //        } else {
@@ -72,6 +76,15 @@ public class ElementalChoice extends AppCompatActivity{
 //                Bundle bundle = new Bundle();
                 startActivity(intent);
                 //  yearList.get(position).quizzes;
+            }
+        });
+        Button figureButton = (Button)findViewById(R.id.figureChoice);
+        figureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent figureIntent = new Intent(ElementalChoice.this,FigureQuiz.class);
+                figureIntent.putExtra("figureQuiz",figureList.get(0).getQuizzes());
+                startActivity(figureIntent);
             }
         });
 

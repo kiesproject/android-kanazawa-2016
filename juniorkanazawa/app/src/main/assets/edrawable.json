@@ -53,6 +53,7 @@
             "id": 1105,
             "title": "画像の問題5",
             "statement": "次のうち、鉄橋大橋（てっきょうおおはし）としては国内有数（こくないゆうすう）の歴史（れきし）を持（も）ち、国に指定（してい）された犀川（さいがわ）大橋はどれでしょうか。",
+            "drawable":"nn",
             "first": "nakanobridge",
             "second": "saigawabridge",
             "third": "asanobridge",

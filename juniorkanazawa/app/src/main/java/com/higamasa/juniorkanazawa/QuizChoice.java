@@ -30,11 +30,14 @@ public class QuizChoice extends AppCompatActivity{
         setContentView(R.layout.choice_quiz);
         ListView listView = (ListView)findViewById(R.id.quizList);
         final QuizRepository repository = new QuizRepository(this);
+        final QuizRepository figureRepository = new QuizRepository(this);
 //        ArrayList<QuizEntity> quizList;
 //        quizList = repository.getQuizList();
         repository.loadQuiz();
+        figureRepository.loadFigureQuiz();
 //        Log.d("year", String.valueOf(repository));
         final ArrayList<YearQuiz> yearList = repository.getQuizList();
+        final ArrayList<YearQuiz> figureList = figureRepository.getQuizList();
 //        if(yearList.isEmpty()){
 //            Log.d("QuizList","isEmpty");
 //        } else {
@@ -72,6 +75,15 @@ public class QuizChoice extends AppCompatActivity{
 //                Bundle bundle = new Bundle();
                 startActivity(intent);
                 //  yearList.get(position).quizzes;
+            }
+        });
+        Button figureButton = (Button)findViewById(R.id.figureChoice);
+        figureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent figureIntent = new Intent(QuizChoice.this,FigureQuiz.class);
+                figureIntent.putExtra("figureQuiz",figureList.get(0).getQuizzes());
+                startActivity(figureIntent);
             }
         });
 

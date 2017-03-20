@@ -102,9 +102,8 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		editor.putInt("position", position);
 		editor.putInt("schoolJudge",schoolJudge);
 		editor.commit();
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-		editor = pref.edit();
-		editor.clear().commit();
+
+
 
 	}
 
@@ -242,20 +241,20 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 			//不正解の時
 			soundPool.play(incorrectSound, 2.0f, 2.0f, 0, 0, 1);
 			IncorrectAnimation(view);
-			final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
-			scrollView.post(new Runnable() {
-				public void run() {
-					scrollView.fullScroll(ScrollView.FOCUS_UP);
-				}
-			});
+            final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+            scrollView.post(new Runnable() {
+                public void run() {
+                    scrollView.fullScroll(ScrollView.FOCUS_UP);
+                }
+            });
 		}
-		if (selectAnswer2[0] == Answer) {
+		if (selectAnswer2[0] == answerText) {
 			selectButton[0].setBackgroundResource(R.drawable.correct_color);
-		} else if (selectAnswer2[1] == Answer) {
+		} else if (selectAnswer2[1] == answerText) {
 			selectButton[1].setBackgroundResource(R.drawable.correct_color);
-		} else if (selectAnswer2[2] == Answer) {
+		} else if (selectAnswer2[2] == answerText) {
 			selectButton[2].setBackgroundResource(R.drawable.correct_color);
-		} else if (selectAnswer2[3] == Answer) {
+		} else if (selectAnswer2[3] == answerText) {
 			selectButton[3].setBackgroundResource(R.drawable.correct_color);
 		}
 

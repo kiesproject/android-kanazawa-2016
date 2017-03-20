@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.AppIndex;
@@ -68,6 +69,7 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     private Button thirdButton;
     private Button fourthButton;
     private String[] selectAnswer2;
+    private Button breakButton;
     private int[] idButton = {R.id.button0, R.id.button1, R.id.button2, R.id.button3};
     private int[][] repeat = new int[11][50];
 
@@ -123,6 +125,27 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
         incorrectSound = soundPool.load(this, R.raw.incorrect, 1);
         setQuestion(sNumber, yStatement);
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        breakButton = (Button) findViewById(R.id.breakButton);
+        breakButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder breakDialog = new AlertDialog.Builder(AllQuizActivity.this);
+                breakDialog.setTitle("検定を中断しますか?");
+                breakDialog.setMessage("検定結果は保存されません");
+                breakDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                breakDialog.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                breakDialog.show();
+            }
+        });
     }
 
     //クイズの挿入
@@ -175,25 +198,6 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
         }
         Log.e("aa", String.valueOf(yNumber));
         Log.e("bb", String.valueOf(sNumber));
-//        for (int i = 0; i < 50; i++) {
-//            num[i] = false;
-//        Arrays.fill(num,false);
-
-//        for (int i = 0;i<50;i++){
-//            int p = randomQuestion.nextInt(50);
-//            if (num[p] == false){
-//                num[p] = true;
-//            }
-//        }
-
-//        for (int i = 0;i<50;i++){
-//            int n = randomQuestion.nextInt(50);
-//            int temp = sNumber[i];
-//            sNumber[i] = sNumber[n];
-//            sNumber[n] = temp;
-//        }
-//        for (int i = 0;i<50;i++) {
-//            if (!num[sNumber]) {
 
         correctImage = (ImageView) findViewById(R.id.correctImage);
         correctImage.setImageResource(R.drawable.maru200);
@@ -209,9 +213,6 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
         secondAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getSecond();
         thirdAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getThird();
         fourthAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getFourth();
-
-
-
 
         String AnswerText = null;
         AnswerNumber = allList.get(yNumber).getQuizzes().get(sNumber).getAnswer();
@@ -268,10 +269,22 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
             correct++;
             soundPool.play(correctSound, 1.0f, 1.0f, 0, 0, 1);
             CorrectAnimation(view);
+            final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+            scrollView.post(new Runnable() {
+                public void run() {
+                    scrollView.fullScroll(ScrollView.FOCUS_UP);
+                }
+            });
         } else {
             //不正解の時
             soundPool.play(incorrectSound, 2.0f, 2.0f, 0, 0, 1);
             IncorrectAnimation(view);
+            final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+            scrollView.post(new Runnable() {
+                public void run() {
+                    scrollView.fullScroll(ScrollView.FOCUS_UP);
+                }
+            });
         }
 
         if (selectAnswer2[0] == Answer) {

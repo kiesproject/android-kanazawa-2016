@@ -5,81 +5,64 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D4DFE6"
     android:paddingBottom="15dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp"
-    tools:context="com.higamasa.juniorkanazawa.QuizChoice"
-    android:background="#D4DFE6">
+    tools:context="com.higamasa.juniorkanazawa.QuizChoice">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <LinearLayout
 
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="233dp"
                 android:layout_height="92dp"
-                android:src="@drawable/kanazawa_logo"
-                android:scaleType="fitXY"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <CheckBox
-                android:text="未回答のみ"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox4"
-                android:layout_weight="1" />
-
-            <CheckBox
-                android:text="間違えた問題のみ"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox3"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-
-
+                android:scaleType="fitXY"
+                android:src="@drawable/kanazawa_logo" />
 
             <Button
-                android:text="総合問題"
-                android:textSize="25dp"
+                android:id="@+id/figureChoice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/total"
-                android:background="#f9a825"
-                android:layout_margin="4dp" />
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/quizList"
-                android:divider="#D4DFE6"
-                android:dividerHeight="8dp"
-                android:background="@drawable/round_button"
-                android:layout_margin="4dp">
-            </ListView>
+                android:layout_height="match_parent"
+                android:background="#010101"/>
 
         </LinearLayout>
 
+
+
+
+        <Button
+            android:id="@+id/total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="#f9a825"
+            android:text="総合問題"
+            android:textSize="25dp" />
+
+        <ListView
+            android:id="@+id/quizList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button"
+            android:divider="#D4DFE6"
+            android:dividerHeight="8dp"></ListView>
+
     </LinearLayout>
+
+</LinearLayout>
 
 

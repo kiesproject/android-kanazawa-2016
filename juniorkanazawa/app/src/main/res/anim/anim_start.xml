@@ -14,7 +14,7 @@
         <!--android:toYScale="1" />-->
     <!--<rotate-->
         <!--android:fromDegrees="0"-->
-        <!--android:toDegrees="0"-->
+        <!--android:toDegrees="360"-->
         <!--android:pivotX="50%"-->
         <!--android:pivotY="50%"/>-->
     <!--<translate-->
