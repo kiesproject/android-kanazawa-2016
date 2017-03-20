@@ -41,26 +41,16 @@
                         "answer": "3"
                     },
 
-//                    {
-//                        "id": 1205,
-//                        "title": "画像の問題4",
-//                        "statement": "地図の○の部分はかつて、石川県で最も大きな湖であったが、現在は3分の2が干拓されて農地となっている。この湖の名前は何か。",
-//                        "drawable": "",
-//                        "first": "河北潟(かほくがた)",
-//                        "second": "邑地潟(おうちがた)",
-//                        "third": "木場潟(きばがた)",
-//                        "fourth": "柴山潟（しばやまがた）",
-//                        "answer": "1"
-//                    },
+
                     {
                         "id": 1206,
                         "title": "画像の問題4",
                         "statement": "次のうち、鉄橋大橋としては国内有数の歴史を持ち、国に指定された 犀川大橋はどれか",
-                        "drawable":"nana",
-                        "first": "nakanobridge",
-                        "second": "saigawabridge",
-                        "third": "asanobridge",
-                        "fourth": "umenobridge",
+                        "drawable":"quizbridge",
+                        "first": "①",
+                        "second": "②",
+                        "third": "③",
+                        "fourth": "④",
                         "answer": "2"
                     },
                     {
@@ -84,17 +74,6 @@
                         "third": "大名屋敷跡",
                         "fourth": "武家屋敷跡",
                         "answer": "4"
-                    },
-                    {
-                        "id": 1209,
-                        "title": "画像の問題7",
-                        "statement": "次のうち鉄橋大橋としては国内有数の歴史をもち、国から登録有形文化財に指定された犀川大橋はどの写真か。",
-                        "drawable":"juju",
-                        "first": "nakanobridge",
-                        "second": "asanobridge",
-                        "third": "saigawabridge",
-                        "fourth": "umenobridge",
-                        "answer": "3"
                     }
                 ]
             }

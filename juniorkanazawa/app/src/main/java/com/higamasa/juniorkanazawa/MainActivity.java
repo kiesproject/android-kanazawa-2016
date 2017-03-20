@@ -55,12 +55,14 @@ public class MainActivity extends AppCompatActivity {
         sNumber = preferences.getInt("s", -1);
         position = preferences.getInt("position", 0);
         schoolJudge = preferences.getInt("schoolJudge", -1);
-        if (sNumber == breakList.get(position).getQuizzes().size())
+        if (sNumber == breakList.get(position).getQuizzes().size()) {
             sNumber = -1;
-        correct = -1;
-        if (sNumber == eBreakList.get(position).getQuizzes().size())
+            correct = -1;
+        }
+        if (sNumber == eBreakList.get(position).getQuizzes().size()) {
             sNumber = -1;
-        correct = -1;
+            correct = -1;
+        }
         Log.d("schoool",String.valueOf(schoolJudge));
         Log.d("ssss", String.valueOf(sNumber));
 //schoolJudgeが0で中学生

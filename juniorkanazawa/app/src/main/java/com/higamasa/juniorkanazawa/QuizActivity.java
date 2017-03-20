@@ -325,7 +325,8 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 //		nextFlag = true;
 	}
 
-	public void IncorrectAnimation(View view) {
+
+	public void IncorrectAnimation(View view){
 		anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
 		anim_start_incorrect.setAnimationListener(new Animation.AnimationListener() {
 			@Override
@@ -343,7 +344,4 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		});
 		IncorrectImage.startAnimation(anim_start_incorrect);
 	}
-
-
-
 }
