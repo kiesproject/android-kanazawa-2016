@@ -10,6 +10,7 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/backButton"
 		android:text="戻る"
+		android:background="@drawable/square_button3"
 		android:textSize="25dp"/>
 		<ImageView
 			android:layout_width="match_parent"

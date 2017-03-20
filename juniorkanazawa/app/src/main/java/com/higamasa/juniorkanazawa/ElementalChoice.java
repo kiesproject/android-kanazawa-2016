@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import com.higamasa.juniorkanazawa.entity.QuizEntity;
+import com.higamasa.juniorkanazawa.repository.ElementalRepository;
 import com.higamasa.juniorkanazawa.repository.QuizRepository;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,23 +22,23 @@ import java.util.List;
 /**
  * Created by banjousyunsuke on 2016/12/02.
  */
-
-public class QuizChoice extends AppCompatActivity{
-    private int juniorJudge = 0;
+public class ElementalChoice extends AppCompatActivity{
+    private int elementalJudge = 1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choice_quiz);
         ListView listView = (ListView)findViewById(R.id.quizList);
-        final QuizRepository repository = new QuizRepository(this);
-        final QuizRepository figureRepository = new QuizRepository(this);
+        final ElementalRepository repository = new ElementalRepository(this);
+        final ElementalRepository figureRepository = new ElementalRepository(this);
 //        ArrayList<QuizEntity> quizList;
 //        quizList = repository.getQuizList();
-        repository.loadQuiz();
+        repository.elementalQuiz();
         figureRepository.loadFigureQuiz();
 //        Log.d("year", String.valueOf(repository));
         final ArrayList<YearQuiz> yearList = repository.getQuizList();
         final ArrayList<YearQuiz> figureList = figureRepository.getQuizList();
+
 //        if(yearList.isEmpty()){
 //            Log.d("QuizList","isEmpty");
 //        } else {
@@ -53,24 +54,13 @@ public class QuizChoice extends AppCompatActivity{
             data[i] = yearList.get(i).getYear_str();
             Log.d("year",data[i]);
         }
-
-        Button tutoButton = (Button)findViewById(R.id.tutorial);
-        tutoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(QuizChoice.this, TutoActivity.class);
-                startActivity(intent);
-            }
-        });
-
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,data);
         listView.setAdapter(arrayAdapter);
-
-        Button allQuizButton = (Button)findViewById(R.id.total);
-        allQuizButton.setOnClickListener(new View.OnClickListener() {
+        Button button = (Button)findViewById(R.id.total);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuizChoice.this,AllQuizActivity.class);
+                Intent intent = new Intent(ElementalChoice.this,AllQuizActivity.class);
                 intent.putExtra("All",yearList);
                 startActivity(intent);
             }
@@ -79,10 +69,10 @@ public class QuizChoice extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent , View view, int position, long l) {
 //                ListView listView = (ListView) parent;
-                Intent intent = new Intent(QuizChoice.this,QuizActivity.class);
+                Intent intent = new Intent(ElementalChoice.this,QuizActivity.class);
                 intent.putExtra("yearAll",yearList.get(position).getQuizzes());
                 intent.putExtra("position",position);
-                intent.putExtra("schoolJudge",juniorJudge);
+                intent.putExtra("schoolJudge",elementalJudge);
 //                Bundle bundle = new Bundle();
                 startActivity(intent);
                 //  yearList.get(position).quizzes;
@@ -92,7 +82,7 @@ public class QuizChoice extends AppCompatActivity{
         figureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent figureIntent = new Intent(QuizChoice.this,FigureQuiz.class);
+                Intent figureIntent = new Intent(ElementalChoice.this,FigureQuiz.class);
                 figureIntent.putExtra("figureQuiz",figureList.get(0).getQuizzes());
                 startActivity(figureIntent);
             }

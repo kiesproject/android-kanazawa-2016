@@ -16,19 +16,21 @@ import java.util.ArrayList;
  * Created by banjousyunsuke on 2016/11/29.
  */
 
-public class QuizRepository implements Serializable {
+public class ElementalRepository implements Serializable {
     private Context mContext;
     //    private ArrayList<QuizEntity> mQuizList;
     private ArrayList<YearQuiz> allQuiz;
-    public QuizRepository(Context context) {
+    public ElementalRepository(Context context) {
 //        this.mQuizList = new ArrayList<>();
         this.allQuiz = new ArrayList<>();
         this.mContext = context;
     }
-    public void loadQuiz() {
+
+
+    public void elementalQuiz(){
         try {
 //            InputStream inputStream = assetManager.open("junior1.json");
-            String jsonString = getStringFromAssets("junior.json");
+            String jsonString = getStringFromAssets("elemental.json");
             JSONObject json = new JSONObject(jsonString).getJSONObject("catalog");
 //            JSONObject juniorArray = json.getJSONObject("junior");
             JSONArray yearsArray = json.getJSONArray("years");
@@ -98,7 +100,7 @@ public class QuizRepository implements Serializable {
     public void loadFigureQuiz() {
         try {
 //            InputStream inputStream = assetManager.open("junior1.json");
-            String jsonString = getStringFromAssets("jdrawable.json");
+            String jsonString = getStringFromAssets("edrawable.json");
             JSONObject json = new JSONObject(jsonString).getJSONObject("catalog");
 //            JSONObject juniorArray = json.getJSONObject("junior");
             JSONArray yearsArray = json.getJSONArray("years");

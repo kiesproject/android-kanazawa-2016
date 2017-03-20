@@ -153,11 +153,12 @@ public class QuizResult extends AppCompatActivity{
 		double c = (double)correct;		//double型のcorrect
 		double ns = (double)nState;		//double型のnState
 
-		if (c/ns*100 >= 60){
-			iView.setImageResource(R.drawable.yes);
+
+		if (c/ns*100 <= 60) {
+			iView.setImageResource(R.drawable.no);
 		}
 		else{
-			iView.setImageResource(R.drawable.no);
+			iView.setImageResource(R.drawable.yes);
 		}
 		return iView;
 	}

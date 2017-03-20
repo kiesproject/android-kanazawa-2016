@@ -15,7 +15,7 @@ public class QuizEntity implements Serializable {
         private String third;
         private String fourth;
         private int answer;
-//      private String drawable;
+      private String drawable;
 
         public int getId() {
                 return id;
@@ -49,7 +49,7 @@ public class QuizEntity implements Serializable {
                 return answer;
         }
 
-//      public String getDrawable() {return drawable;}
+      public String getDrawable() {return drawable;}
 
         public void setId(int id) {
                 this.id = id;
@@ -77,7 +77,7 @@ public class QuizEntity implements Serializable {
 
         public void setFourth(String fourth) { this.fourth = fourth;}
 
-        //        public void setDrawable(String drawable){this.drawable =drawable;}
+                public void setDrawable(String drawable){this.drawable =drawable;}
         public void setAnswer(int answer) {
                 this.answer = answer;
         }

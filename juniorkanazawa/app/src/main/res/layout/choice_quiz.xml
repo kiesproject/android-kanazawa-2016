@@ -5,47 +5,58 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D4DFE6"
     android:orientation="vertical"
     android:paddingBottom="15dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp"
-    tools:context="com.higamasa.juniorkanazawa.QuizChoice"
-    android:background="#D4DFE6">
+    tools:context="com.higamasa.juniorkanazawa.QuizChoice">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_weight="1"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="遊び方"
                 android:textSize="25dp"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:background="@drawable/square_button3"
                 android:id="@+id/tutorial"/>
             <Button
                 android:text="画像問題"
+                android:layout_weight="1"
                 android:textSize="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/draw"
-                android:background="#00BFFF"/>
+                android:id="@+id/figureChoice"
+                android:background="@drawable/square_button2"/>
         </LinearLayout>
-            <Button
-                android:text="総合問題"
-                android:textSize="25dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/total"
-                android:background="#f9a825"
-                android:layout_margin="4dp" />
+
+
+
+
+        <Button
+            android:id="@+id/total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/square_button"
+            android:text="総合問題"
+            android:textSize="25dp" />
+
 
             <ListView
                 android:layout_width="match_parent"
@@ -56,5 +67,8 @@
                 android:background="@drawable/round_button"
                 android:layout_margin="4dp">
             </ListView>
+
     </LinearLayout>
 </LinearLayout>
+
+

@@ -1,13 +1,18 @@
 package com.higamasa.juniorkanazawa;
 
+/**
+ * Created by banjousyunsuke on 2017/02/17.
+ */
+
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.app.Activity;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,71 +23,122 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.higamasa.juniorkanazawa.entity.QuizEntity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.os.PersistableBundle;
+import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.content.Intent;
+import com.higamasa.juniorkanazawa.entity.QuizEntity;
+import android.app.Activity;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import android.support.annotation.IntegerRes;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class AllQuizActivity extends Activity implements View.OnClickListener {
+public class BreakQuizActivity extends Activity implements View.OnClickListener {
     private boolean nextFlag = false;
-
-    ArrayList<YearQuiz> allList;    //問題list
-    private int correct = 0;    //正解数
-    private int sNumber = 0;    //statement番号
-    private int yStatement = 0;
-//    private int[][] ysNumber = new int[2][50];
-
-    private boolean sJudge = false;
-    private int aNumberStatement = 0;
+    private int correct = 0;		//正解数
+    private int sNumber = 0;		//statement番号
+    private int mNumber[] = new int[4];
+    private int a = 0;
+    private int[] idButton = {R.id.button0,R.id.button1, R.id.button2,R.id.button3};
+    private String[] selectAnswer2;
+    ArrayList<QuizEntity> answerList;    //問題list
 
     private String Answer;            //正解の文字列
 
-    private TextView Title;
-    private TextView Statement;
-
-    private ImageView correctImage;
-    private ImageView IncorrectImage;
-    private boolean Animation = true;
-    private Animation anim_start_correct;
-    private Animation anim_start_incorrect;
-    private Animation anim_end;
-    private SoundPool soundPool;
-    private AudioAttributes audioAttributes;
-    private int correctSound;
-    private int incorrectSound;
-    private int AnswerNumber;
-
-    private GoogleApiClient client;
-    private String[] selectAnswer;
     private String firstAnswer;
     private String secondAnswer;
     private String thirdAnswer;
     private String fourthAnswer;
+    private String selectAnswer[];
+    private TextView Statement;
+    private TextView Title;
+
 
     private Button[] selectButton;
     private Button firstButton;
     private Button secondButton;
     private Button thirdButton;
     private Button fourthButton;
-    private String[] selectAnswer2;
     private Button breakButton;
-    private int[] idButton = {R.id.button0, R.id.button1, R.id.button2, R.id.button3};
-    private int[][] repeat = new int[11][50];
+
+    private ImageView correctImage;
+    private ImageView IncorrectImage;
+    private Animation anim_start_correct;
+    private Animation anim_start_incorrect;
+    private SoundPool soundPool;
+    private AudioAttributes audioAttributes;
+    private int correctSound;
+    private int incorrectSound;
+    private int AnswerNumber;
+    private int position;
+    private SharedPreferences.Editor editor;
+    private int schoolJudge;
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 //		return super.onTouchEvent(event);
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (nextFlag) {
+        if(event.getAction() == MotionEvent.ACTION_UP){
+            if(nextFlag) {
+//					CorrectAnimation();
                 next();
             }
         }
         return true;
     }
+
+    @Override
+    protected void onStop () {
+        super.onStop();
+        SharedPreferences prefer = getSharedPreferences("file", MODE_PRIVATE);
+        editor = prefer.edit();
+        editor.putInt("s", sNumber);
+        editor.putInt("c", correct);
+        editor.putInt("position",position);
+        editor.putInt("schoolJudge",schoolJudge);
+        editor.commit();
+        editor.clear();
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = pref.edit();
+        editor.clear().commit();
+
+    }
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -108,10 +164,20 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
         }
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent ArrayIntent = getIntent();
+        answerList = (ArrayList<QuizEntity>) ArrayIntent.getSerializableExtra("break");
+        correct = ArrayIntent.getIntExtra("c",correct);
+        sNumber = ArrayIntent.getIntExtra("i",sNumber);
         setContentView(R.layout.content_quiz);
+        Intent intent = getIntent();
+        position = intent.getIntExtra("position",position);
+        schoolJudge = intent.getIntExtra("schoolJudge",schoolJudge);
+        setQuestion(sNumber);
         audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
@@ -123,13 +189,11 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
 
         correctSound = soundPool.load(this, R.raw.correct, 1);
         incorrectSound = soundPool.load(this, R.raw.incorrect, 1);
-        setQuestion(sNumber, yStatement);
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        breakButton = (Button) findViewById(R.id.breakButton);
+        breakButton = (Button)findViewById(R.id.breakButton);
         breakButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder breakDialog = new AlertDialog.Builder(AllQuizActivity.this);
+                AlertDialog.Builder breakDialog = new AlertDialog.Builder(BreakQuizActivity.this);
                 breakDialog.setTitle("検定を中断しますか?");
                 breakDialog.setMessage("検定結果は保存されません");
                 breakDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {
@@ -144,130 +208,64 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
                     }
                 });
                 breakDialog.show();
+
+
             }
         });
     }
 
     //クイズの挿入
-    public void setQuestion(int sNumber, int yNumber) {
-        Intent ArrayIntent = getIntent();
-
-        allList = (ArrayList<YearQuiz>) ArrayIntent.getSerializableExtra("All");
-
-//        String.format("%d", allList.get(sNumber).getId());
-        Random randomQuestion = new Random();
-        Random randomYear = new Random();
-//        sNumber = noRepeatRandom(sNumber);
-//        for (int i = 0; i < 50; i++) {
-//            n = randomQuestion.nextInt(50);
-//            sNumber[i] = n;
-//            int a = sNumber[i];
-//            for (i = 0; i < 50; i++)
-//                if (sNumber[i] == a)
-//                    break;
-//        }
-        yNumber = randomYear.nextInt(11);
-        sNumber = randomQuestion.nextInt(allList.get(yNumber).getQuizzes().size());
-        Log.e("a", String.valueOf(yNumber));
-        Log.e("b", String.valueOf(sNumber));
-
-        for (int n = 0; n<11;n++){
-            for (int s = 0; s<allList.get(yNumber).getQuizzes().size();s++){
-                if (repeat[n][s] == allList.get(yNumber).getQuizzes().get(sNumber).getId()){
-                    Random random = new Random();
-                    Random random1 = new Random();
-                    int m = yNumber;
-                    yNumber = random.nextInt(11);
-                    sNumber = random1.nextInt(allList.get(yNumber).getQuizzes().size());
-                    Log.e("de", String.valueOf(yNumber));
-                    Log.e("ba", String.valueOf(sNumber));
-                    if (yNumber <= m){
-                        n = 0;
-                        Log.e("w", String.valueOf(yNumber));
-                        Log.e("ww", String.valueOf(sNumber));
-                    }
-                }
-            }
-        }
-        for (int i = 0 ; i < 11; i++){
-            for (int j = 0 ; j < allList.get(yNumber).getQuizzes().size() ; j++){
-                if (i == yNumber && j == sNumber){
-                    repeat[i][j] = allList.get(yNumber).getQuizzes().get(sNumber).getId();
-                }
-            }
-        }
-        Log.e("aa", String.valueOf(yNumber));
-        Log.e("bb", String.valueOf(sNumber));
-
+    public void setQuestion(int sNumber) {
         correctImage = (ImageView) findViewById(R.id.correctImage);
         correctImage.setImageResource(R.drawable.maru200);
         correctImage.setVisibility(View.INVISIBLE);
-        IncorrectImage = (ImageView) findViewById(R.id.IncorrectImage);
+        IncorrectImage = (ImageView)findViewById(R.id.IncorrectImage);
         IncorrectImage.setImageResource(R.drawable.incorrect200);
         IncorrectImage.setVisibility(View.INVISIBLE);
         Statement = (TextView) findViewById(R.id.statement);
-        Statement.setText(allList.get(yNumber).getQuizzes().get(sNumber).getStatement());
+        Statement.setText(answerList.get(sNumber).getStatement());
+
         Title = (TextView) findViewById(R.id.title);
-        Title.setText(allList.get(yNumber).getQuizzes().get(sNumber).getTitle());
-        firstAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getFirst();
-        secondAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getSecond();
-        thirdAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getThird();
-        fourthAnswer = allList.get(yNumber).getQuizzes().get(sNumber).getFourth();
+        Title.setText(answerList.get(sNumber).getTitle());
 
-        String AnswerText = null;
-        AnswerNumber = allList.get(yNumber).getQuizzes().get(sNumber).getAnswer();
-        switch (AnswerNumber) {
-            case 1:
-                AnswerText = allList.get(yNumber).getQuizzes().get(sNumber).getFirst();
-//                        Log.d("aa", String.valueOf(sNumber[n]));
-                break;
-            case 2:
-                AnswerText = allList.get(yNumber).getQuizzes().get(sNumber).getSecond();
-//                        Log.d("aa", String.valueOf(sNumber[n]));
-                break;
-            case 3:
-                AnswerText = allList.get(yNumber).getQuizzes().get(sNumber).getThird();
-//                        Log.d("aa", String.valueOf(sNumber[n]));
-                break;
-            case 4:
-                AnswerText = allList.get(yNumber).getQuizzes().get(sNumber).getFourth();
-//                        Log.d("aa", String.valueOf(sNumber[n]));
-                break;
-        }
-        Answer = AnswerText;
+        firstAnswer = answerList.get(sNumber).getFirst();
+        secondAnswer = answerList.get(sNumber).getSecond();
+        thirdAnswer = answerList.get(sNumber).getThird();
+        fourthAnswer = answerList.get(sNumber).getFourth();
 
-        //項目のランダム
+        AnswerNumber = answerList.get(sNumber).getAnswer();
+        Answer = AnswerSelect(AnswerNumber);
 
-        selectAnswer = new String[]{firstAnswer, secondAnswer, thirdAnswer, fourthAnswer};
+        selectAnswer = new String[]{firstAnswer,secondAnswer,thirdAnswer,fourthAnswer};
         List<String> list = Arrays.asList(selectAnswer);
         Collections.shuffle(list);
-        selectButton = new Button[]{firstButton, secondButton, thirdButton, fourthButton};
+        selectButton = new Button[]{firstButton,secondButton,thirdButton,fourthButton};
         selectAnswer2 = list.toArray(new String[list.size()]);
-
-        for (int k = 0; k < 4; k++) {
-            final int n = k;
-            selectButton[k] = (Button) findViewById(idButton[k]);
-            selectButton[k].setText(selectAnswer2[k]);
-            selectButton[k].setOnClickListener(new View.OnClickListener() {
+        for (int i = 0;i < 4;i++){
+            final int n = i;
+            selectButton[i] = (Button)findViewById(idButton[i]);
+            selectButton[i].setText(selectAnswer2[i]);
+            selectButton[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    answerJudge(findViewById(idButton[n]));
+                    AnswerJudge(findViewById(idButton[n]));
                 }
             });
         }
+
+
     }
 
     //正誤判定
-    public void answerJudge(View view) {
+    public void AnswerJudge(View view) {
         if (nextFlag) {
             next();
             return;
         }
-
         if (((Button) view).getText().equals(Answer)) {
             //正解の時
             correct++;
-            soundPool.play(correctSound, 1.0f, 1.0f, 0, 0, 1);
+            soundPool.play(correctSound,1.0f,1.0f,0,0,1);
             CorrectAnimation(view);
             final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
             scrollView.post(new Runnable() {
@@ -275,9 +273,10 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
                     scrollView.fullScroll(ScrollView.FOCUS_UP);
                 }
             });
-        } else {
+        }
+        else {
             //不正解の時
-            soundPool.play(incorrectSound, 2.0f, 2.0f, 0, 0, 1);
+            soundPool.play(incorrectSound,2.0f,2.0f,0,0,1);
             IncorrectAnimation(view);
             final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
             scrollView.post(new Runnable() {
@@ -286,30 +285,51 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
                 }
             });
         }
-
-        if (selectAnswer2[0] == Answer) {
+        if (selectAnswer2[0] == Answer){
             selectButton[0].setBackgroundResource(R.drawable.correct_color);
-        } else if (selectAnswer2[1] == Answer) {
+        }else if (selectAnswer2[1] == Answer){
             selectButton[1].setBackgroundResource(R.drawable.correct_color);
-        } else if (selectAnswer2[2] == Answer) {
+        }else if (selectAnswer2[2] == Answer){
             selectButton[2].setBackgroundResource(R.drawable.correct_color);
-        } else if (selectAnswer2[3] == Answer) {
+        }else if (selectAnswer2[3] == Answer){
             selectButton[3].setBackgroundResource(R.drawable.correct_color);
         }
+
         nextFlag = true;
     }
 
+    //正解の番号を文字列に変換
+    public String AnswerSelect(int answerNumber){
+        String answerText = null;
+
+        switch(answerNumber){
+            case 1:
+                answerText = firstAnswer;
+                break;
+            case 2:
+                answerText = secondAnswer;
+                break;
+            case 3:
+                answerText = thirdAnswer;
+                break;
+            case 4:
+                answerText = fourthAnswer;
+                break;
+        }
+        return answerText;
+    }
+
     //次の問題へ移行
-    public void next() {
+    public void next(){
         nextFlag = false;
         ++sNumber;
-        if (sNumber < 50) {
-            setQuestion(sNumber, yStatement);
-
-        } else {
-            Intent CorrectIntent = new Intent(AllQuizActivity.this, QuizResult.class);
-            CorrectIntent.putExtra("correct", correct);
-            CorrectIntent.putExtra("sNumber", sNumber);
+        if(sNumber < answerList.size()){
+            setQuestion(sNumber);
+        }
+        else{
+            Intent CorrectIntent = new Intent(BreakQuizActivity.this,QuizResult.class);
+            CorrectIntent.putExtra("correct",correct);
+            CorrectIntent.putExtra("sNumber",sNumber);
             startActivity(CorrectIntent);
         }
         selectButton[0].setBackgroundResource(R.drawable.round_button);
@@ -323,50 +343,51 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     }
 
     public void CorrectAnimation(View view) {
-        anim_start_correct = AnimationUtils.loadAnimation(this, R.anim.anim_start);
+//		correctImage.setVisibility(View.INVISIBLE);
 
+        anim_start_correct = AnimationUtils.loadAnimation(this, R.anim.anim_start);
         anim_start_correct.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+//				correctImage.setVisibility(View.INVISIBLE);
             }
+
             @Override
             public void onAnimationEnd(Animation animation) {
                 correctImage.setVisibility(View.GONE);
             }
+
             @Override
             public void onAnimationRepeat(Animation animation) {
+
             }
         });
         correctImage.startAnimation(anim_start_correct);
 
+//		nextFlag = true;
 
     }
-
-
     public void IncorrectAnimation(View view){
 
         anim_start_incorrect = AnimationUtils.loadAnimation(this, R.anim.anim_start);
         anim_start_incorrect.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+
             }
+
             @Override
             public void onAnimationEnd(Animation animation) {
                 IncorrectImage.setVisibility(View.GONE);
             }
+
             @Override
             public void onAnimationRepeat(Animation animation) {
+
             }
         });
         IncorrectImage.startAnimation(anim_start_incorrect);
-    }
-
-
-    public void noRepeatRandom(int sNumber, int yNumber ) {
 
     }
-
-
-
 }
 

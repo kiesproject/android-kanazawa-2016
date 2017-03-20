@@ -21,31 +21,35 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center|top"
             android:src="@drawable/title3"
             android:background="#D4DFE6"
             android:gravity="center"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/ebutton"
             android:elevation="3dp"
-            android:background="@drawable/ripple_main"
+            android:scaleType="fitXY"
+            android:background="@null"
             android:id="@+id/elementbutton"
             android:gravity="center"
-            android:layout_marginBottom="20dp"/>
+            android:layout_weight="1"/>
+
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center|bottom"
             android:src="@drawable/jubutton"
-            android:background="@drawable/ripple_main"
+            android:layout_marginLeft="20dp"
+            android:background="@null"
             android:elevation="3dp"
+            android:scaleType="fitXY"
             android:id="@+id/juniorbutton"
-            android:gravity="center"/>
-
+            android:gravity="center"
+            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>
