@@ -5,6 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="15dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
@@ -15,24 +16,35 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
-
+            <!--<ImageView-->
+                <!--android:layout_width="225dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:src="@drawable/kanazawa_logo"-->
+                <!--android:scaleType="fitXY"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:id="@+id/imageView"/>-->
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="225dp"
-                android:layout_height="100dp"
-                android:src="@drawable/kanazawa_logo"
-                android:scaleType="fitXY"
-                android:layout_gravity="center"
-                android:id="@+id/imageView"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="遊び方"
+                android:textSize="25dp"
+                android:id="@+id/tutorial"/>
+            <Button
+                android:text="画像問題"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/draw"
+                android:background="#00BFFF"/>
+        </LinearLayout>
 
             <Button
                 android:text="総合問題"
@@ -52,9 +64,5 @@
                 android:background="@drawable/round_button"
                 android:layout_margin="4dp">
             </ListView>
-
-        </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

@@ -251,9 +251,11 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		selectButton[2].setBackgroundResource(R.drawable.round_button);
 		selectButton[3].setBackgroundResource(R.drawable.round_button);
 	}
+
 	@Override
 	public void onClick(View view) {
 	}
+
 	public void CorrectAnimation(View view) {
 //		correctImage.setVisibility(View.INVISIBLE);
 		anim_start_correct = AnimationUtils.loadAnimation(this, R.anim.anim_start);
