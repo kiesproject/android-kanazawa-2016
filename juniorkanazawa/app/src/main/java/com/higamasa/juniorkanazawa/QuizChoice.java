@@ -49,10 +49,21 @@ public class QuizChoice extends AppCompatActivity{
             data[i] = yearList.get(i).getYear_str();
             Log.d("year",data[i]);
         }
+
+        Button tutoButton = (Button)findViewById(R.id.tutorial);
+        tutoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuizChoice.this, TutoActivity.class);
+                startActivity(intent);
+            }
+        });
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,data);
         listView.setAdapter(arrayAdapter);
-        Button button = (Button)findViewById(R.id.total);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        Button allQuizButton = (Button)findViewById(R.id.total);
+        allQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QuizChoice.this,AllQuizActivity.class);

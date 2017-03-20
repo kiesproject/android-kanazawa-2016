@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class QuizResult extends AppCompatActivity{
 
 	private RatingBar bar;			//星判定
 	private TextView gradingText;	//レベル判定
+	private ImageView jImage;
 
 	private Button schoolButton;	//学校選択
 	private Button ageButton;		//年代選択
@@ -67,6 +69,9 @@ public class QuizResult extends AppCompatActivity{
 		bar.setStepSize((float) 0.5);
 		bar.setIsIndicator(true);
 		barJudge(bar,correct,sNumber);
+
+		jImage = (ImageView)findViewById(R.id.judgeImage);
+		imageJudge(jImage,correct,sNumber);
 
 		gradingText = (TextView) findViewById(R.id.gradingView);
 		correctJudge(gradingText,correct, sNumber);
@@ -142,5 +147,18 @@ public class QuizResult extends AppCompatActivity{
 			text.setText("カード認定できないレベルです…");
 		}
 		return text;
+	}
+
+	public ImageView imageJudge(ImageView iView,int correct, int nState){
+		double c = (double)correct;		//double型のcorrect
+		double ns = (double)nState;		//double型のnState
+
+		if (c/ns*100 <= 60){
+			iView.setImageResource(R.drawable.yes);
+		}
+		else{
+			iView.setImageResource(R.drawable.no);
+		}
+		return iView;
 	}
 }
