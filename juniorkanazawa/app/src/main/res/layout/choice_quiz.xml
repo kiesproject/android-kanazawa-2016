@@ -19,13 +19,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
-            <!--<ImageView-->
-                <!--android:layout_width="225dp"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:src="@drawable/kanazawa_logo"-->
-                <!--android:scaleType="fitXY"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:id="@+id/imageView"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +38,6 @@
                 android:id="@+id/draw"
                 android:background="#00BFFF"/>
         </LinearLayout>
-
             <Button
                 android:text="総合問題"
                 android:textSize="25dp"

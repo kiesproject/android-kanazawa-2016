@@ -11,20 +11,9 @@
 		android:id="@+id/backButton"
 		android:text="戻る"
 		android:textSize="25dp"/>
-	<LinearLayout
-		android:layout_width="wrap_content"
-		android:layout_height="match_parent"
-		android:orientation="horizontal">
 		<ImageView
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_weight="1"
-			android:src="@drawable/tuto1"/>
-		<ImageView
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:layout_weight="1"
-			android:src="@drawable/tuto2"/>
-	</LinearLayout>
-
+			android:src="@drawable/tutorial10"/>
 </LinearLayout>
