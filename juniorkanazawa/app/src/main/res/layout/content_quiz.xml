@@ -4,7 +4,7 @@
     android:id="@+id/content_quiz"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D4DFE6"
+    android:background="#A7FFEB"
     android:orientation="vertical"
     android:paddingBottom="3dp"
     android:paddingLeft="10dp"
@@ -31,6 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/square_button3"
+            android:layout_marginBottom="5dp"
             android:text="中断する"
             android:textSize="27dp" />
     </LinearLayout>

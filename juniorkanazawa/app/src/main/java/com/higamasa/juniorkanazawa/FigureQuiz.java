@@ -108,24 +108,6 @@ public class FigureQuiz extends Activity implements View.OnClickListener {
         return true;
     }
 
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        SharedPreferences prefer = getSharedPreferences("file", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefer.edit();
-        editor.putInt("s", sNumber);
-        editor.putInt("c", correct);
-        editor.putInt("position", position);
-        editor.putInt("schoolJudge",schoolJudge);
-        editor.commit();
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = pref.edit();
-        editor.clear().commit();
-
-    }
-
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
