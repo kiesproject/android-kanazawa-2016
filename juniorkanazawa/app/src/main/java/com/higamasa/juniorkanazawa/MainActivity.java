@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.higamasa.juniorkanazawa.repository.ElementalRepository;
 import com.higamasa.juniorkanazawa.repository.QuizRepository;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         if (schoolJudge == 0) {
             if (correct > 0 || sNumber > 0) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setTitle("前回の戻る？");
+                alertDialog.setTitle("前回の問題に戻りますか？");
                 alertDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }else if (schoolJudge == 1){
             if (correct > 0 || sNumber > 0) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setTitle("前回の戻る？");
+                alertDialog.setTitle("前回のもんだいに戻りますか？");
                 alertDialog.setPositiveButton("はい", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -117,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 }
 
 

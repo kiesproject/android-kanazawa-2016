@@ -58,7 +58,7 @@ public class QuizChoice extends AppCompatActivity{
         tutoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(QuizChoice.this, TutoActivity.class);
+                Intent intent = new Intent(QuizChoice.this,TutoActivity.class);
                 startActivity(intent);
             }
         });

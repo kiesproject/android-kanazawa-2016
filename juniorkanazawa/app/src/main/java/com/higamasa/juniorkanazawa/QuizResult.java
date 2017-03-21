@@ -1,6 +1,8 @@
 package com.higamasa.juniorkanazawa;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -47,22 +49,28 @@ public class QuizResult extends AppCompatActivity{
 
 		nCorrect = (TextView)findViewById(R.id.nCorrectView);
 		nCorrect.setText("正答数");
+		nCorrect.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 
 		cStatement = (TextView)findViewById(R.id.correctView);
 		cStatement.setText(String.valueOf(correct));
+		cStatement.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 
 		pStatement = (TextView)findViewById(R.id.statementView);
 		pStatement.setText(String.valueOf(sNumber));
+		pStatement.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 
 		rCorrect = (TextView)findViewById(R.id.rCorrectView);
 		rCorrect.setText("正答率");
+		rCorrect.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 
 		percentage = (double) correct/ (double) sNumber*100;
 		pText = (TextView)findViewById(R.id.percentageView);
 		pText.setText(String.valueOf(((int) percentage)));
+		pText.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 
 		percent = (TextView)findViewById(R.id.percentView);
 		percent.setText("%");
+		percent.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 
 		bar = (RatingBar)findViewById(R.id.ratingBar);
 		bar.setNumStars(3);
@@ -133,18 +141,27 @@ public class QuizResult extends AppCompatActivity{
 
 		if (c/ns*100 == 100){
 			text.setText("ジュニア金沢検定認定レベルです!!");
+			text.setTextColor(Color.RED);
+			text.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 		}
 		else if ((c/ns)*100 < 100 && (c/ns)*100 >= 90){
 			text.setText("ゴールドカード認定レベルです!!");
+			text.setTextColor(Color.RED);
+			text.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 		}
 		else if ((c/ns)*100 < 90 && (c/ns)*100 >= 80){
 			text.setText("シルバーカード認定レベルです!!");
+			text.setTextColor(Color.RED);
+			text.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 		}
 		else if ((c/ns)*100 < 80 && (c/ns)*100 >= 70){
 			text.setText("ブロンズカード認定レベルです!!");
+			text.setTextColor(Color.RED);
+			text.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 		}
 		else{
-			text.setText("カード認定できないレベルです…");
+			text.setText("カード認定までがんばろう！");
+			text.setTypeface(Typeface.createFromAsset(getAssets(), "Meiryo.ttf"));
 		}
 		return text;
 	}

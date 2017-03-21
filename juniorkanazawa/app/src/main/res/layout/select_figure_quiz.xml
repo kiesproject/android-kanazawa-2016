@@ -4,7 +4,7 @@
     android:id="@+id/content_quiz"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D4DFE6"
+    android:background="#A7FFEB"
     android:orientation="vertical"
     android:paddingBottom="3dp"
     android:paddingLeft="10dp"

@@ -22,6 +22,7 @@ import java.util.List;
 /**
  * Created by banjousyunsuke on 2016/12/02.
  */
+
 public class ElementalChoice extends AppCompatActivity{
     private int elementalJudge = 1;
     @Override
@@ -50,6 +51,15 @@ public class ElementalChoice extends AppCompatActivity{
 //        for (String str : data) {
 //            Log.d("year",str);
 //        }
+        Button tutoButton = (Button)findViewById(R.id.tutorial);
+        tutoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ElementalChoice.this,ETutoActivity.class);
+                startActivity(intent);
+            }
+        });
+
         for (int i = 0;i<yearList.size();i++){
             data[i] = yearList.get(i).getYear_str();
             Log.d("year",data[i]);
