@@ -102,9 +102,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 		editor.putInt("position", position);
 		editor.putInt("schoolJudge",schoolJudge);
 		editor.commit();
-
-
-
 	}
 
 

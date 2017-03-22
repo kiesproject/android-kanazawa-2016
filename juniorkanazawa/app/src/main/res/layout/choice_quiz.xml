@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D4DFE6"
+    android:background="#A7FFEB"
     android:orientation="vertical"
     android:paddingBottom="15dp"
     android:paddingLeft="10dp"
@@ -32,6 +32,7 @@
                 android:text="遊び方"
                 android:textSize="25dp"
                 android:layout_weight="3"
+                android:layout_margin="5dp"
                 android:gravity="center"
                 android:background="@drawable/square_button3"
                 android:id="@+id/tutorial"/>
@@ -41,12 +42,10 @@
                 android:textSize="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="4dp"
                 android:id="@+id/figureChoice"
                 android:background="@drawable/square_button2"/>
         </LinearLayout>
-
-
-
 
         <Button
             android:id="@+id/total"
@@ -54,15 +53,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:background="@drawable/square_button"
-            android:text="総合問題"
+            android:text="総合問題（全50問）"
             android:textSize="25dp" />
-
 
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/quizList"
-                android:divider="#D4DFE6"
+                android:divider="#A7FFEB"
                 android:dividerHeight="8dp"
                 android:background="@drawable/round_button"
                 android:layout_margin="4dp">
