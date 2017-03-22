@@ -2,9 +2,10 @@ package com.higamasa.juniorkanazawa;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -14,7 +15,7 @@ import android.widget.TextView;
  * Created by higamasa on 2017/01/31.
  */
 
-public class QuizResult extends AppCompatActivity{
+public class QuizResult extends Activity{
 
 	int correct;		//正解数
 	int sNumber;		//問題数
