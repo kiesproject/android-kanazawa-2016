@@ -55,6 +55,7 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
     private int correctSound;
     private int incorrectSound;
     private int AnswerNumber;
+    private int schoolJudge;
 
     private GoogleApiClient client;
     private String[] selectAnswer;
@@ -120,7 +121,8 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
                 .setAudioAttributes(audioAttributes)
                 .setMaxStreams(2)
                 .build();
-
+        Intent intent = getIntent();
+        schoolJudge = intent.getIntExtra("schoolJudge",schoolJudge);
         correctSound = soundPool.load(this, R.raw.correct, 1);
         incorrectSound = soundPool.load(this, R.raw.incorrect, 1);
         setQuestion(sNumber, yStatement);
@@ -307,10 +309,17 @@ public class AllQuizActivity extends Activity implements View.OnClickListener {
             setQuestion(sNumber, yStatement);
 
         } else {
-            Intent CorrectIntent = new Intent(AllQuizActivity.this, QuizResult.class);
-            CorrectIntent.putExtra("correct", correct);
-            CorrectIntent.putExtra("sNumber", sNumber);
-            startActivity(CorrectIntent);
+            if (schoolJudge == 0) {
+                Intent CorrectIntent = new Intent(AllQuizActivity.this, QuizResult.class);
+                CorrectIntent.putExtra("correct", correct);
+                CorrectIntent.putExtra("sNumber", sNumber);
+                startActivity(CorrectIntent);
+            }else if (schoolJudge == 1){
+                Intent CorrectIntent = new Intent(AllQuizActivity.this, ElementalResult.class);
+                CorrectIntent.putExtra("correct", correct);
+                CorrectIntent.putExtra("sNumber", sNumber);
+                startActivity(CorrectIntent);
+            }
         }
         selectButton[0].setBackgroundResource(R.drawable.round_button);
         selectButton[1].setBackgroundResource(R.drawable.round_button);

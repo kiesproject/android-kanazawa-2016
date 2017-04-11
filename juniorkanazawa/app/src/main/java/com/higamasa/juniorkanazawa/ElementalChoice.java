@@ -72,6 +72,7 @@ public class ElementalChoice extends AppCompatActivity{
             public void onClick(View view) {
                 Intent intent = new Intent(ElementalChoice.this,AllQuizActivity.class);
                 intent.putExtra("All",yearList);
+                intent.putExtra("schoolJudge",elementalJudge);
                 startActivity(intent);
             }
         });
@@ -94,6 +95,7 @@ public class ElementalChoice extends AppCompatActivity{
             public void onClick(View view) {
                 Intent figureIntent = new Intent(ElementalChoice.this,FigureQuiz.class);
                 figureIntent.putExtra("figureQuiz",figureList.get(0).getQuizzes());
+                figureIntent.putExtra("schoolJudge",elementalJudge);
                 startActivity(figureIntent);
             }
         });

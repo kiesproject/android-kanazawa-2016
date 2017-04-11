@@ -278,10 +278,17 @@ public class FigureQuiz extends Activity implements View.OnClickListener {
         if (sNumber < answerList.size()) {
             setQuestion(sNumber);
         } else {
-            Intent CorrectIntent = new Intent(FigureQuiz.this, QuizResult.class);
-            CorrectIntent.putExtra("correct", correct);
-            CorrectIntent.putExtra("sNumber", sNumber);
-            startActivity(CorrectIntent);
+            if (schoolJudge == 0) {
+                Intent CorrectIntent = new Intent(FigureQuiz.this, QuizResult.class);
+                CorrectIntent.putExtra("correct", correct);
+                CorrectIntent.putExtra("sNumber", sNumber);
+                startActivity(CorrectIntent);
+            }else if (schoolJudge == 1){
+                Intent CorrectIntent = new Intent(FigureQuiz.this, ElementalResult.class);
+                CorrectIntent.putExtra("correct", correct);
+                CorrectIntent.putExtra("sNumber", sNumber);
+                startActivity(CorrectIntent);
+            }
         }
         selectButton[0].setBackgroundResource(R.drawable.round_button);
         selectButton[1].setBackgroundResource(R.drawable.round_button);

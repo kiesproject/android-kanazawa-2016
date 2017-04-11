@@ -327,10 +327,17 @@ public class BreakQuizActivity extends Activity implements View.OnClickListener 
             setQuestion(sNumber);
         }
         else{
-            Intent CorrectIntent = new Intent(BreakQuizActivity.this,QuizResult.class);
-            CorrectIntent.putExtra("correct",correct);
-            CorrectIntent.putExtra("sNumber",sNumber);
-            startActivity(CorrectIntent);
+            if (schoolJudge == 0) {
+                Intent CorrectIntent = new Intent(BreakQuizActivity.this, QuizResult.class);
+                CorrectIntent.putExtra("correct", correct);
+                CorrectIntent.putExtra("sNumber", sNumber);
+                startActivity(CorrectIntent);
+            }else if (schoolJudge == 1){
+                Intent CorrectIntent = new Intent(BreakQuizActivity.this, ElementalResult.class);
+                CorrectIntent.putExtra("correct", correct);
+                CorrectIntent.putExtra("sNumber", sNumber);
+                startActivity(CorrectIntent);
+            }
         }
         selectButton[0].setBackgroundResource(R.drawable.round_button);
         selectButton[1].setBackgroundResource(R.drawable.round_button);

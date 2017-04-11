@@ -11,6 +11,7 @@
 
     <style name="AppTheme.actionBarStyle" parent="Widget.AppCompat.Light.ActionBar">
         <item name="android:background">#00BFFF</item>
+
     </style>
 
     
