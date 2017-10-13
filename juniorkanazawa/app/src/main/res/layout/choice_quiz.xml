@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A7FFEB"
+    android:orientation="vertical"
+    android:paddingBottom="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    tools:context="com.higamasa.juniorkanazawa.QuizChoice">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="遊び方"
+                android:textSize="25dp"
+                android:layout_weight="3"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:background="@drawable/square_button3"
+                android:id="@+id/tutorial"/>
+            <Button
+                android:text="画像問題"
+                android:layout_weight="1"
+                android:textSize="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:id="@+id/figureChoice"
+                android:background="@drawable/square_button2"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/square_button"
+            android:text="総合問題（全50問）"
+            android:textSize="25dp" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/quizList"
+                android:divider="#A7FFEB"
+                android:dividerHeight="8dp"
+                android:background="@drawable/round_button"
+                android:layout_margin="4dp">
+            </ListView>
+
+    </LinearLayout>
+</LinearLayout>
+
+

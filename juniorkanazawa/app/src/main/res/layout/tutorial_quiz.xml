@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:id="@+id/tutorial_quiz"
+			  android:orientation="vertical"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:background="#A7FFEB">
+
+	<ImageView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:src="@drawable/tutorial10"/>
+	<Button
+		android:id="@+id/backButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/square_button3"
+		android:layout_gravity="right"
+		android:text="戻る"
+		android:textSize="25dp"/>
+</LinearLayout>
